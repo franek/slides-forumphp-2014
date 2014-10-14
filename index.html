@@ -86,6 +86,7 @@ layout: false
 ![JIRA](http://upload.wikimedia.org/wikipedia/en/thumb/b/bf/JIRA_logo.svg/150px-JIRA_logo.svg.png)
 ![Github](http://upload.wikimedia.org/wikipedia/commons/thumb/2/29/GitHub_logo_2013.svg/140px-GitHub_logo_2013.svg.png)
 ![docker](http://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Docker_%28container_engine%29_logo.png/250px-Docker_%28container_engine%29_logo.png)
+![Vagrant](http://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Vagrant.png/150px-Vagrant.png)
 
 ---
 # A quoi servent les API d'Arte ? 
@@ -192,7 +193,7 @@ Réponse :
 curl -I https://.../api1/resource?access_token=MDBjYzMzNTRjNTQxMjE2NGI0ODJkNTc3NGJhODFlOTc0MDY2ZjMyZTIxY2ExYjI1ZGIxYWYzMDZmYTgzM2UxMA
 ```
 
-```
+```data
 HTTP/1.1 200 OK
 Server: openresty
 Date: Thu, 23 Oct 2014 19:51:39 GMT
@@ -212,7 +213,7 @@ X-Rate-Limit-Reset: 1412887899
 curl -I https://.../api1/resource?access_token=MDBjYzMzNTRjNTQxMjE2NGI0ODJkNTc3NGJhODFlOTc0MDY2ZjMyZTIxY2ExYjI1ZGIxYWYzMDZmYTgzM2UxMA
 ```
 
-```
+```data
 HTTP/1.1 429 Too Many Requests
 Server: openresty
 ```
@@ -225,7 +226,7 @@ Server: openresty
 ---
 # Configuration nginx
 
-```nginx
+```.nginxconf
 location /api1 {
     # lua_code_cache off; # Dev : disable cache
     set $roles ''; # This variable is set by lua script
@@ -305,7 +306,7 @@ end
 ---
 # Exemples
 
-```
+```bash
 GET /users?limit=1
 ```
 
@@ -344,7 +345,7 @@ GET /users?limit=1
 
 JSONAPI décrit la manière d'inclure des sous-documents (réduction du nom de requête)
 
-```
+```bash
 GET /users?limit=1&include=groups
 ```
 
@@ -381,7 +382,7 @@ GET /users?limit=1&include=groups
 # Restrictions des attributs renvoyés
 
 JSONAPI décrit comment limiter les attributs retournés : 
-```
+```bash
 GET /users?limit=1&fields=id
 ```
 
@@ -400,7 +401,7 @@ GET /users?limit=1&fields=id
 }
 ```
 
-```
+```bash
 GET /users?limit=1&fields=id,name
 ```
 
