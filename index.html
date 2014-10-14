@@ -59,10 +59,11 @@ layout: false
 # ARTE
 * chaine TV franco-allemande
 * canal 7 = M6+1
+* Pas de Dominique Chapatte
 * web : [arte.tv](http://www.arte.tv), [concert.arte.tv](http://concert.arte.tv), [future.arte.tv](http://future.arte.tv), [creative.arte.tv](http://creative.arte.tv)
 * CatchUp : Arte+7
 * Applications mobiles : [iOS](https://itunes.apple.com/fr/app/arte/id405028510?mt=8),[Android](https://play.google.com/store/apps/details?id=tv.arte.plus7&hl=fr_FR)
-* Applications sur les box, hbbtv (applications TV connectées), ...
+* Applications ARTE+7 sur les box des opérateurs, HBBTV (applications TV connectées), ...
 ---
 # Complexité/contraintes ARTE
 * plusieurs entités : 
@@ -70,7 +71,7 @@ layout: false
   * [ARTE France](http://www.arte.tv/fr/arte-france/7870412,CmC=2196662.html) (Paris), [ARTE Deutschland](http://www.arte.tv/fr/arte-deutschland-tv-gmbh/7870412,CmC=2196668.html) (Baden-Baden) : production de contenu
 * [soumis au code des marchés publics](http://www.arte.tv/fr/appels-d-offres/2196586.html)
 * contenu franco-allemand
-* heure de diffusion différente en France/Allemagne
+* diffusion différente en France/Allemagne
 * petites équipes techniques
 ---
 # stack technique
@@ -91,9 +92,9 @@ layout: false
 ---
 # A quoi servent les API d'Arte ? 
 
-* principalement, mise à disposition :
+* mise à disposition :
   * des métadonnées des programmes diffusés à l'antenne (titre, description, photo, producteur, casting)
-  * des URLs des streams (mp4, hls, rtmp) pour développement applications mobiles
+  * des URLs des streams (mp4, hls, rtmp) pour développement applications mobiles ou télévisions connectées
   * de flux optimisés pour une plate-forme dédiée (applications mobiles, TV connectées, ...)
 
 ```json
@@ -127,7 +128,7 @@ layout: false
 ```
 
 ---
-# API historique
+# API historique (PAPI)
 * JAVA/MongoDB
 * batch de synchro ORACLE -> MongoDB
 * points forts : 
@@ -137,20 +138,30 @@ layout: false
   * utilisée par de nombreux partenaires
 * points faibles
   * asynchrone (synchro ORACLE / crontab)
-  * uniquement contenu broadcast (contenu diffusé à l'antenne)
+  * uniquement contenu broadcast (contenu diffusé à l'antenne) ainsi que certains bonus (bande-annonces, bonus, ...)
   * pas de suivi de l'usage
   * trigramme pour certaines propriétés
 ---
-# Développement nouvelle API
+# Développement nouvelle API (OPA)
 * objectif : mise à disposition de tout le contenu ARTE :
-  * contenu antenne (broadcast+ARTE+7)
-  * contenu spécifique Web (Concert+FUTURE+Creative+Bonus+...)
+  * contenu antenne (broadcast, ARTE+7)
+  * contenu spécifique Web (Concert, Future, Creative, Bonus web, ...)
 * socle Symfony2/MongoDB
 * synchronisation des données via messages asynchrones (RabbitMQ)
 * utilisation du standard jsonapi
 * micro-services : création de plusieurs composants (authentification, API programme, API Player,...)
 * sécurisé par authentification oAuth
 * suivi de l'usage (throttling)
+
+---
+# Migration en cours
+* Symfony2, ça marche.
+* OPA est déjà utilisé sur :
+  * nombreux players sur les sites arte.tv
+  * plate-formes cinema, Tracks (développement module Drupal spécifique)
+  * une partie des des applications mobiles
+  * Afin de limiter maintenance sur PAPI, PAPI utilise des briques de OPA
+* mise à jour prévue pour les applications TV connectées (fin d'année)
 
 ---
 # Sécurisation de l'API et throttling
@@ -282,7 +293,7 @@ end
   * [details](https://www.adayinthelifeof.nl/2014/05/28/throttle-your-api-calls-ratelimitbundle/)
 * Implémentation Varnish
   * [libvmod-throttle](https://github.com/nand2/libvmod-throttle)
-* autres solutions ? (Vos retours m'intéressent)
+* Autres solutions ? (Vos retours m'intéressent)
 
 ---
 # Standard JSONAPI
@@ -434,15 +445,6 @@ GET /users?limit=1&fields=id,name
   * [mise en place d'une classe ExclusionStrategy](http://jolicode.com/blog/how-to-implement-your-own-fields-inclusion-rules-with-jms-serializer) (ping [@Damien](https://twitter.com/damienalexandre))
 
 ---
-# Les autres bundles utilisés : 
- 
- * [DoctrineMongoDBBundle](http://symfony.com/doc/current/bundles/DoctrineMongoDBBundle/index.html)
- * [FOSRestBundle](https://github.com/FriendsOfSymfony/FOSRestBundle) : 
- * [NelmioDocBundle](https://github.com/nelmio/NelmioApiDocBundle)
- * [EkinoNewrelicbundle](https://github.com/ekino/EkinoNewRelicBundle)
- * [oldsound/rabbitmq-bundle](https://github.com/videlalvaro/RabbitMqBundle)
-
----
 # Problèmes rencontrés
 
 * performance du JMSSerializer
@@ -453,26 +455,34 @@ GET /users?limit=1&fields=id,name
   * création d'un bundle permettant de mettre en cache le mécanisme de serialization
   * presque libre : https://github.com/ArteGEIE/ArteHateoasBundle
   * ping [@xlacot](https://twitter.com/xlacot)
+* performance de l'hydratation de DoctrineMongoDB
 
 ---
-# Nos outils : 
-
-* Newrelic
-* Kibana/Logstash : en cours de déploiement
-* StatsD : ça arrive
+# Les autres bundles utilisés : 
+ 
+ * [DoctrineMongoDBBundle](http://symfony.com/doc/current/bundles/DoctrineMongoDBBundle/index.html)
+ * [FOSRestBundle](https://github.com/FriendsOfSymfony/FOSRestBundle) : 
+ * [NelmioDocBundle](https://github.com/nelmio/NelmioApiDocBundle)
+ * [EkinoNewrelicbundle](https://github.com/ekino/EkinoNewRelicBundle)
+ * [oldsound/rabbitmq-bundle](https://github.com/videlalvaro/RabbitMqBundle)
 
 ---
 # Next ? 
-* monitoring de l'usage : script Lua pour envoyer des métriques à StatsD
-* Mise à disposition de SDK pour faciliter l'utilisation de l'API par des partenaires externes : 
+* monitoring de l'usage : script Lua pour envoyer des métriques à StatsD ?
+* mise à disposition de SDK pour faciliter l'utilisation de l'API par des partenaires externes : 
   * Work In Progress : Module Drupal
-* Ouvrir le code du serveur de l'API (cf. The Guardian)
-* Ouvrir l'API à des développeurs externes (Open Data ?)
+* ouvrir le code du serveur de l'API (cf. The Guardian)
+* ouvrir l'API à des développeurs externes (Open Data ?)
+* HHVM ? 
 
 ---
 name: inverse
 layout: true
 class: center, middle, inverse
+---
+# Merci
+(ainsi qu'à [``&lt;joliCode /&gt;``](http://jolicode.com/))
+
 ---
 # Des questions ? 
 
