@@ -71,7 +71,7 @@ layout: false
   * [ARTE France](http://www.arte.tv/fr/arte-france/7870412,CmC=2196662.html) (Paris), [ARTE Deutschland](http://www.arte.tv/fr/arte-deutschland-tv-gmbh/7870412,CmC=2196668.html) (Baden-Baden) : production de contenu
 * [soumis au code des marchés publics](http://www.arte.tv/fr/appels-d-offres/2196586.html)
 * contenu franco-allemand
-* diffusion différente en France/Allemagne
+* heure de diffusion différente en France et en Allemagne
 * petites équipes techniques
 ---
 # stack technique
@@ -138,7 +138,7 @@ layout: false
   * utilisée par de nombreux partenaires
 * points faibles
   * asynchrone (synchro ORACLE / crontab)
-  * uniquement contenu broadcast (contenu diffusé à l'antenne) ainsi que certains bonus (bande-annonces, bonus, ...)
+  * uniquement contenu broadcast (contenu diffusé à l'antenne) ainsi que certains "habillages" (bande-annonce, bonus, ...)
   * pas de suivi de l'usage
   * trigramme pour certaines propriétés
 ---
@@ -148,7 +148,7 @@ layout: false
   * contenu spécifique Web (Concert, Future, Creative, Bonus web, ...)
 * socle Symfony2/MongoDB
 * synchronisation des données via messages asynchrones (RabbitMQ)
-* utilisation du standard jsonapi
+* utilisation du standard [{json:api}](http://www.jsonapi.org)
 * micro-services : création de plusieurs composants (authentification, API programme, API Player,...)
 * sécurisé par authentification oAuth
 * suivi de l'usage (throttling)
@@ -158,15 +158,18 @@ layout: false
 * Symfony2, ça marche.
 * OPA est déjà utilisé sur :
   * nombreux players sur les sites arte.tv
-  * plate-formes cinema, Tracks (développement module Drupal spécifique)
+  * plate-formes [cinéma](http://cinema.arte.tv], nouveau site [Tracks](http://tracks.arte.tv) (développement module Drupal spécifique)
   * une partie des des applications mobiles
-  * Afin de limiter maintenance sur PAPI, PAPI utilise des briques de OPA
-* mise à jour prévue pour les applications TV connectées (fin d'année)
+  * utilisation de briques de OPA dans PAPI
+* mise à jour prévue pour :
+  * les applications TV connectées (fin d'année)
+  * [concert.arte.tv](http://concert.arte.tv)
+  * usine à sites
 
 ---
-# Sécurisation de l'API et throttling
+# Sécurisation des API et throttling
 * API sécurisée par authentification oAuth
-* Mise en place d'un reverse proxy authentifiant (Openresty, distribution nginx avec support de Lua)
+* Mise en place d'un reverse proxy authentifiant ([Openresty](http://openresty.org), distribution nginx avec support de Lua)
 * Développement de scripts [Lua](http://fr.wikipedia.org/wiki/Lua) chargés dans la configuration Nginx permettant de valider token oAuth
 * Toutes les API "sécurisées" sont protégées par ce Reverse Proxy
 * Le reverse proxy authentifiant est également en charge du throttling (exemple : 1000 requêtes/heure)
@@ -286,17 +289,26 @@ end
 ```
 
 ---
+# Limites de la solution
+
+* la première requête est plus lente (sous-requête vers le serveur oAuth)
+  * on pourrait modifier le script lua pour lire la BDD du serveur oauth
+* tests de la solution
+  * pas de framework de tests unitaires
+  * mise en place de tests fonctionnels (casper-js, [frisby.js](http://frisbyjs.com/))
+* peu de documentation (bientôt un article sur le blog d'Arte et/ou sur le blog de Jolicode - ping [@ThibZ](https://twitter.com/ThibZ))
+
+---
 # Solutions alternatives
 
 * Implémentation via des bundle Symfony2 (est-ce que vous voulez vraiment recevoir une requête sur votre applicatif ?) : 
-  * [noxlogic/ratelimit-bundle](https://github.com/jaytaph/RateLimitBundle)
-  * [details](https://www.adayinthelifeof.nl/2014/05/28/throttle-your-api-calls-ratelimitbundle/)
+  * [noxlogic/ratelimit-bundle](https://github.com/jaytaph/RateLimitBundle) ([details](https://www.adayinthelifeof.nl/2014/05/28/throttle-your-api-calls-ratelimitbundle/))
 * Implémentation Varnish
   * [libvmod-throttle](https://github.com/nand2/libvmod-throttle)
 * Autres solutions ? (Vos retours m'intéressent)
 
 ---
-# Standard JSONAPI
+# Standard [{json:api}](http://www.jsonapi.org)
 
 * Convention pour décrire un appel REST au format JSON
 
@@ -354,7 +366,7 @@ GET /users?limit=1
 ---
 # Inclusion de documents
 
-JSONAPI décrit la manière d'inclure des sous-documents (réduction du nom de requête)
+[{json:api}](http://www.jsonapi.org) décrit la manière d'inclure des sous-documents (réduction du nom de requête)
 
 ```bash
 GET /users?limit=1&include=groups
@@ -390,9 +402,9 @@ GET /users?limit=1&include=groups
 
 ```
 ---
-# Restrictions des attributs renvoyés
+# Restriction des attributs renvoyés
 
-JSONAPI décrit comment limiter les attributs retournés : 
+[{json:api}](http://www.jsonapi.org) décrit comment limiter les attributs retournés : 
 ```bash
 GET /users?limit=1&fields=id
 ```
@@ -433,25 +445,63 @@ GET /users?limit=1&fields=id,name
 ```
 
 ---
+# Syntaxe pour les filtres
+
+```bash
+GET /users?id=user-1,user-2
+```
+
+```json
+{
+"users": [
+      {
+          "id": "user-1",
+          "href": "https://server/users/1",
+          "links": {
+              "groups": "https://server/groups?user=1"
+          }
+      },
+      {
+          "id": "user-2",
+          "href": "https://server/users/2",
+          "links": {
+              "groups": "https://server/groups?user=2"
+          }
+      }      
+    }
+  ]
+}
+```
+
+---
+# Création de requête complexe 
+
+Mélange de toutes les fonctionnalités de [{json:api}](http://www.jsonapi.org) 
+
+```bash
+GET /users?id=user-1,user-2&tags=tag1,tag2&fields=name&include=groups&sort=-id
+```
+
+---
 # Solutions mises en oeuvre 
 
 * Surcharge de [BazingaHateoasBundle](https://github.com/willdurand/BazingaHateoasBundle)
   * utilisation d'annotations pour ajouter les links à la volée
 
 * gestion des inclusions : utilisation d'un 'serializer.post_serialize'
-  * dans le cas de l'inclusion d'une seule ressource, utilisation sous-requêtes Symfony2
-  * dans le cas d'une inclusion multiple, exécution de multi-curl
+  * dans le cas de l'inclusion d'une seule ressource, utilisation d'une sous-requête Symfony2 ([pull-request sur jms-serializer en attente](https://github.com/schmittjoh/serializer/pull/341))
+  * dans le cas d'une inclusion multiple, utilisation de multi-curl (cache varnish)
 * limitation des attributs retournés : 
-  * [mise en place d'une classe ExclusionStrategy](http://jolicode.com/blog/how-to-implement-your-own-fields-inclusion-rules-with-jms-serializer) (ping [@Damien](https://twitter.com/damienalexandre))
+  * [mise en place d'une classe ExclusionStrategy](http://jolicode.com/blog/how-to-implement-your-own-fields-inclusion-rules-with-jms-serializer) (ping [@damienalexandre](https://twitter.com/damienalexandre))
 
 ---
 # Problèmes rencontrés
 
-* performance du JMSSerializer
+* performance du JMSSerializer :
   * création d'un bundle permettant de mettre en cache les "visitors"
-  * Le bundle devrait bientôt être libéré
+  * le bundle devrait bientôt être libéré
   * ping [@xlacot](https://twitter.com/xlacot)
-* performance de HateoasBundle
+* performance de HateoasBundle :
   * création d'un bundle permettant de mettre en cache le mécanisme de serialization
   * presque libre : https://github.com/ArteGEIE/ArteHateoasBundle
   * ping [@xlacot](https://twitter.com/xlacot)
@@ -465,15 +515,17 @@ GET /users?limit=1&fields=id,name
  * [NelmioDocBundle](https://github.com/nelmio/NelmioApiDocBundle)
  * [EkinoNewrelicbundle](https://github.com/ekino/EkinoNewRelicBundle)
  * [oldsound/rabbitmq-bundle](https://github.com/videlalvaro/RabbitMqBundle)
+ * ...
 
 ---
 # Next ? 
 * monitoring de l'usage : script Lua pour envoyer des métriques à StatsD ?
 * mise à disposition de SDK pour faciliter l'utilisation de l'API par des partenaires externes : 
   * Work In Progress : Module Drupal
-* ouvrir le code du serveur de l'API (cf. The Guardian)
+* ouvrir le code du serveur de l'API (cf. [The Guardian](https://github.com/guardian))
 * ouvrir l'API à des développeurs externes (Open Data ?)
 * HHVM ? 
+* développement d'une app [Arte Firefox OS](https://www.mozilla.org/fr/firefox/os/) ? 
 
 ---
 name: inverse
