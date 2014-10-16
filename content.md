@@ -118,7 +118,7 @@ layout: false
 * OPA est déjà utilisé sur :
   * nombreux players sur les sites arte.tv
   * plate-formes [cinéma](http://cinema.arte.tv], nouveau site [Tracks](http://tracks.arte.tv) (développement module Drupal spécifique)
-  * une partie des des applications mobiles
+  * une partie des applications mobiles
   * utilisation de briques de OPA dans PAPI
 * mise à jour prévue pour :
   * les applications TV connectées (fin d'année)
