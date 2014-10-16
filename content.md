@@ -3,8 +3,13 @@ layout: true
 class: center, middle, inverse
 ---
 #Retour d'expérience ARTE GEIE : développement API
+
+???
+Raccourci clavier : P -> permet d'afficher le plan
+Raccourci clavier : C -> permet d'ouvrir une autre fenêtre avec les slides
+
 ---
-# Ich bin François Dume
+# Ich heiße François Dume
 ---
 # "First do it, 
 # then do it right, 
@@ -15,15 +20,20 @@ class: center, middle, inverse
 
 ---
 layout: false
-# ARTE
+class: layout-arte
+
+.center[![ARTE](http://arte.tv/apiepg_static/arte_logo_mobile_128.png)]
+
+.layout-arte-content[
 * chaine TV franco-allemande
 * canal 7 = M6+1
 * Pas de Dominique Chapatte
 * web : [arte.tv](http://www.arte.tv), [concert.arte.tv](http://concert.arte.tv), [future.arte.tv](http://future.arte.tv), [creative.arte.tv](http://creative.arte.tv)
 * CatchUp : Arte+7
-* Applications mobiles : [iOS](https://itunes.apple.com/fr/app/arte/id405028510?mt=8),[Android](https://play.google.com/store/apps/details?id=tv.arte.plus7&hl=fr_FR)
+* Applications mobiles : [iOS](https://itunes.apple.com/fr/app/arte/id405028510?mt=8), [android](https://play.google.com/store/apps/details?id=tv.arte.plus7&hl=fr_FR)
 * Applications ARTE+7 sur les box des opérateurs, HBBTV (applications TV connectées), ...
----
+]
+???
 # Complexité/contraintes ARTE
 * plusieurs entités : 
   * [ARTE GEIE](http://www.arte.tv/fr/arte-geie/7870412,CmC=2196658.html) (Strasbourg) : moyens techniques
@@ -33,7 +43,7 @@ layout: false
 * heure de diffusion différente en France et en Allemagne
 * petites équipes techniques
 ---
-# stack technique
+# Stack technique
 
 ![Drupal](http://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Druplicon.vector.svg/langfr-96px-Druplicon.vector.svg.png)
 ![Java](http://upload.wikimedia.org/wikipedia/fr/thumb/2/2e/Java_Logo.svg/180px-Java_Logo.svg.png 100x100)
@@ -53,8 +63,9 @@ layout: false
 
 * mise à disposition :
   * des métadonnées des programmes diffusés à l'antenne (titre, description, photo, producteur, casting)
-  * des URLs des streams (mp4, hls, rtmp) pour développement applications mobiles ou télévisions connectées
+  * des URLs des streams (mp4, hls)
   * de flux optimisés pour une plate-forme dédiée (applications mobiles, TV connectées, ...)
+  * des statistiques de consultation nos contenus
 
 ```json
   {
@@ -85,8 +96,20 @@ layout: false
             "reassemblyRef": "A",
 
 ```
-
 ---
+# Développement nouvelle API (OPA)
+* **objectif** : mise à disposition de tout le contenu ARTE :
+  * contenu antenne (broadcast, ARTE+7)
+  * contenu spécifique Web (Concert, Future, Creative, Bonus web, ...)
+* socle Symfony2/MongoDB
+* reprise des fonctionnalités de l'API historique
+* synchronisation des données via messages asynchrones (RabbitMQ)
+* utilisation du standard [{json:api}](http://www.jsonapi.org)
+* micro-services : création de plusieurs composants (authentification, API programme, API Player,...)
+* sécurisé par authentification oAuth
+* suivi de l'usage (throttling)
+
+???
 # API historique (PAPI)
 * JAVA/MongoDB
 * batch de synchro ORACLE -> MongoDB
@@ -100,26 +123,14 @@ layout: false
   * uniquement contenu broadcast (contenu diffusé à l'antenne) ainsi que certains "habillages" (bande-annonce, bonus, ...)
   * pas de suivi de l'usage
   * trigramme pour certaines propriétés
----
-# Développement nouvelle API (OPA)
-* objectif : mise à disposition de tout le contenu ARTE :
-  * contenu antenne (broadcast, ARTE+7)
-  * contenu spécifique Web (Concert, Future, Creative, Bonus web, ...)
-* socle Symfony2/MongoDB
-* synchronisation des données via messages asynchrones (RabbitMQ)
-* utilisation du standard [{json:api}](http://www.jsonapi.org)
-* micro-services : création de plusieurs composants (authentification, API programme, API Player,...)
-* sécurisé par authentification oAuth
-* suivi de l'usage (throttling)
 
 ---
 # Migration en cours
 * Symfony2, ça marche.
 * OPA est déjà utilisé sur :
   * nombreux players sur les sites arte.tv
-  * plate-formes [cinéma](http://cinema.arte.tv], nouveau site [Tracks](http://tracks.arte.tv) (développement module Drupal spécifique)
+  * plate-forme [cinéma](http://cinema.arte.tv], nouveau site [Tracks](http://tracks.arte.tv) (développement module Drupal spécifique)
   * une partie des applications mobiles
-  * utilisation de briques de OPA dans PAPI
 * mise à jour prévue pour :
   * les applications TV connectées (fin d'année)
   * [concert.arte.tv](http://concert.arte.tv)
@@ -214,8 +225,10 @@ location /api2 {
     proxy_pass http://api2.local;
 } 
 ```
-* Module Lua pour Nginx : http://wiki.nginx.org/HttpLuaModule
-* Plusieurs directives : 
+Pour aller plus loin, [documentation du module Lua pour Nginx](http://wiki.nginx.org/HttpLuaModule)
+
+???
+Description des directives
   * init_by_lua : script lua exécuté au démarrage du processus nginx principal (inclusion de librairie)
   * init_worker_by_lua : script lua exécuté au démarrage d'un worker nginx
   * content_by_lua : script de génération de contenu (~= php)
@@ -251,7 +264,7 @@ end
 # Limites de la solution
 
 * la première requête est plus lente (sous-requête vers le serveur oAuth)
-  * on pourrait modifier le script lua pour lire la BDD du serveur oauth
+  * on pourrait modifier le script lua pour lire la BDD du serveur oAuth
 * tests de la solution
   * pas de framework de tests unitaires
   * mise en place de tests fonctionnels (casper-js, [frisby.js](http://frisbyjs.com/))
@@ -310,11 +323,11 @@ GET /users?limit=1
   },
   "users": [
       {
-          "id": 1,
+          "id": "gaston",
           "username": "Gaston",
-          "href": "https://server/users/1",
+          "href": "https://server/users/gaston",
           "links": {
-              "groups": "https://server/groups?user=1"
+              "groups": {"href": "https://server/groups?user=gaston"}
           }
       }
     }
@@ -336,11 +349,11 @@ GET /users?limit=1&include=groups
 ...
   "users": [
       {
-          "id": "user-1",
+          "id": "gaston",
           "username": "Gaston",
-          "href": "https://server/users/1",
+          "href": "https://server/users/gaston",
           "links": {
-              "groups": "https://server/groups?user=1"
+              "groups": {"href": "https://server/groups?user=gaston"}
           }
       }
     }
@@ -348,12 +361,14 @@ GET /users?limit=1&include=groups
   "linked" : {
     "groups": [
       {
-        "id": "group-1",
-        "name" : "group1"
+        "id": "group1",
+        "name" : "group1",
+        "href": "https://server/groups/group-1",
       },
       {
         "id": "group-2",
-        "name" : "group2"
+        "name" : "group2",
+        "href": "https://server/groups/group-2",
       },
     ]
   }
@@ -372,10 +387,10 @@ GET /users?limit=1&fields=id
 {
 "users": [
       {
-          "id": "user-1",
-          "href": "https://server/users/1",
+          "id": "gaston",
+          "href": "https://server/users/gaston",
           "links": {
-              "groups": "https://server/groups?user=1"
+              "groups": {"href": "https://server/groups?user=gaston"}
           }
       }
     }
@@ -391,11 +406,11 @@ GET /users?limit=1&fields=id,name
 {
 "users": [
       {
-          "id": "user-1",
+          "id": "gaston",
           "name": "Gaston",
-          "href": "https://server/users/1",
+          "href": "https://server/users/gaston",
           "links": {
-              "groups": "https://server/groups?user=1"
+              "groups": {"href": "https://server/groups?user=gaston"}
           }
       }
     }
@@ -407,24 +422,24 @@ GET /users?limit=1&fields=id,name
 # Syntaxe pour les filtres
 
 ```bash
-GET /users?id=user-1,user-2
+GET /users?id=gaston,fantasio
 ```
 
 ```json
 {
 "users": [
       {
-          "id": "user-1",
-          "href": "https://server/users/1",
+          "id": "gaston",
+          "href": "https://server/users/gaston",
           "links": {
-              "groups": "https://server/groups?user=1"
+              "groups": {"href": "https://server/groups?user=gaston"}
           }
       },
       {
-          "id": "user-2",
-          "href": "https://server/users/2",
+          "id": "fantasio",
+          "href": "https://server/users/fantasio",
           "links": {
-              "groups": "https://server/groups?user=2"
+              "groups": {"href": "https://server/groups?user=fantasio"}
           }
       }      
     }
@@ -438,7 +453,7 @@ GET /users?id=user-1,user-2
 Mélange de toutes les fonctionnalités de [{json:api}](http://www.jsonapi.org) 
 
 ```bash
-GET /users?id=user-1,user-2&tags=tag1,tag2&fields=name&include=groups&sort=-id
+GET /users?id=gaston,fantasio&tags=marsupilami,spirou&fields=name&include=groups&sort=-id
 ```
 
 ---
@@ -492,7 +507,7 @@ layout: true
 class: center, middle, inverse
 ---
 # Merci
-(ainsi qu'à [``&lt;joliCode /&gt;``](http://jolicode.com/))
+(ainsi qu'à [<img height="30em" style="vertical-align:middle" src="http://jolicode.github.io/best-bundle-conf/lib/font/logo-fond-noir.svg" />](http://jolicode.com/))
 
 ---
 # Des questions ? 
