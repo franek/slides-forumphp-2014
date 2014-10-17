@@ -375,7 +375,7 @@ class: center, middle, inverse
 # Standard [{json:api}](http://www.jsonapi.org)
 ---
 class: center, middle
-# **{json:api}** est une convention pour décrire un appel REST au format JSON
+# **[{json:api}](http://www.jsonapi.org)**  est une convention pour décrire un appel REST au format JSON
 
 ???
 > A JSON object MUST be at the root of every JSON API document. This object defines a document's "top level".
@@ -430,9 +430,7 @@ GET /users?limit=1
 ```
 
 ---
-# Inclusion de documents
-
-**{json:api}** décrit la manière d'inclure des sous-documents (réduction du nom de requête)
+**[{json:api}](http://www.jsonapi.org)** décrit la manière d'inclure des sous-documents (réduction du nombre de requêtes)
 
 ```bash
 GET /users?limit=1&include=groups
@@ -470,9 +468,7 @@ GET /users?limit=1&include=groups
 
 ```
 ---
-# Restriction des attributs renvoyés
-
-[{json:api}](http://www.jsonapi.org) décrit comment limiter les attributs retournés : 
+**[{json:api}](http://www.jsonapi.org)** décrit comment limiter les attributs retournés : 
 ```bash
 GET /users?limit=1&fields=id
 ```
@@ -513,7 +509,7 @@ GET /users?limit=1&fields=id,name
 ```
 
 ---
-# Syntaxe pour les filtres
+**[{json:api}](http://www.jsonapi.org)** propose une syntaxe évoluée pour les filtres :
 
 ```bash
 GET /users?id=gaston,fantasio
@@ -542,9 +538,7 @@ GET /users?id=gaston,fantasio
 ```
 
 ---
-# Création de requête complexe 
-
-Mélange de toutes les fonctionnalités de [{json:api}](http://www.jsonapi.org) 
+# Création de requête complexe avec **[{json:api}](http://www.jsonapi.org)** 
 
 ```bash
 GET /users?id=gaston,fantasio&tags=marsupilami,spirou&fields=name
