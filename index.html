@@ -5,30 +5,28 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <style type="text/css">
       @import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-      @import url(http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
-      @import url(http://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
 
-      body { font-family: 'Droid Serif'; }
+      body {font-family: 'Yanone Kaffeesatz'; }
       h1, h2, h3 {
-        font-family: 'Yanone Kaffeesatz';
         font-weight: normal;
       }
       h1 {
-        margin-top:0em;
-        margin-bottom:0.2em;
+        margin:0.2em 0;
       }
-      .footnote {
-        position: absolute;
-        bottom: 3em;
-      }
-      li p { line-height: 1.25em; }
-      .red { color: #fa0000; }
-      .large { font-size: 2em; }
       a {
         color: #FA481C;
-        text-decoration: none;
       }
-      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+
+      p {
+        margin: 0.5em 0;
+      }
+
+      li, p {
+        font-size:2em;
+      }
+      li ul li {
+        font-size:1em;
+      }
       .pull-left {
         float: left;
         width: 47%;
@@ -40,13 +38,7 @@
       .pull-right ~ p {
         clear: both;
       }
-      #slideshow .slide .content code {
-        font-size: 0.8em;
-      }
-      #slideshow .slide .content pre code {
-        font-size: 0.9em;
-        padding: 15px;
-      }
+
       .inverse {
         background: #272822;
         color: #777872;
@@ -55,12 +47,6 @@
       .inverse h1, .inverse h2 {
         color: #f3f3f3;
         line-height: 0.8em;
-      }
-
-      /* Slide-specific styling */
-      #slide-inverse .footnote {
-        bottom: 12px;
-        left: 20px;
       }
 
       /* Two-column layout */
@@ -77,23 +63,21 @@
       }
 
       .layout-arte{
-        background: #FA481C;
-      }
-
-      .layout-arte-content {
-        background:#fff;
-        padding:2em 3em;
-      }
-
-      .layout-arte-concert {
-        background-image: url('http://www.arte.tv/cdnp-concert/sites/all/themes/alw/images/bg/gaze.png');
-        background-repeat: repeat;
-        background-position: 0px 0px;
+        background: #FA481C no-repeat;
+        color:#fff;
       }
 
       blockquote {
         padding:0.5em;
         background: none repeat scroll 0% 0% #F0F0F0;
+      }
+
+      .line-through{
+        text-decoration:line-through;
+      }
+
+      .small{
+        font-size: 0.7em;
       }
 
 

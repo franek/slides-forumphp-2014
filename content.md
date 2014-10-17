@@ -2,7 +2,8 @@ name: inverse
 layout: true
 class: center, middle, inverse
 ---
-#Retour d'expérience ARTE GEIE : développement API
+#Retour d'expérience ARTE GEIE: 
+### Développement API
 
 ???
 Raccourci clavier : P -> permet d'afficher le plan
@@ -10,6 +11,10 @@ Raccourci clavier : C -> permet d'ouvrir une autre fenêtre avec les slides
 
 ---
 # Ich heiße François Dume
+
+???
+Je suis un spécimen rare.
+35 ans, travaille en France, diplôme d'ingénieur, pas chef de projet
 ---
 # "First do it, 
 # then do it right, 
@@ -22,17 +27,68 @@ Raccourci clavier : C -> permet d'ouvrir une autre fenêtre avec les slides
 layout: false
 class: layout-arte
 
-.center[![ARTE](http://arte.tv/apiepg_static/arte_logo_mobile_128.png)]
+.center[<img alt="ARTE" src="http://arte.tv/apiepg_static/arte_logo_mobile_512.png" width='256' height='256' />]
+.pull-left[.center[![France](http://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/langfr-225px-Flag_of_France.svg.png)]]
+.pull-right[.center[![Allemagne](http://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/langfr-225px-Flag_of_Germany.svg.png)]]
 
-.layout-arte-content[
-* chaine TV franco-allemande
+???
 * canal 7 = M6+1
 * Pas de Dominique Chapatte
-* web : [arte.tv](http://www.arte.tv), [concert.arte.tv](http://concert.arte.tv), [future.arte.tv](http://future.arte.tv), [creative.arte.tv](http://creative.arte.tv)
-* CatchUp : Arte+7
-* Applications mobiles : [iOS](https://itunes.apple.com/fr/app/arte/id405028510?mt=8), [android](https://play.google.com/store/apps/details?id=tv.arte.plus7&hl=fr_FR)
-* Applications ARTE+7 sur les box des opérateurs, HBBTV (applications TV connectées), ...
-]
+
+---
+class: layout-arte,center,middle
+#.line-through[Dominique Chapatte]
+
+---
+class: layout-arte
+background-image: url(./images/capture-artetv.png)
+
+---
+class: layout-arte
+background-image: url(./images/capture-concert.png)
+
+---
+class: layout-arte
+background-image: url(./images/capture-creative.png)
+
+---
+class: layout-arte
+background-image: url(./images/capture-future.png)
+
+---
+class: layout-arte
+background-image: url(./images/capture-cinema.png)
+
+---
+class: layout-arte
+background-image: url(./images/capture-tracks.png)
+
+---
+.center[<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/ARTE-%2B7-ORANGE-RVB.svg/487px-ARTE-%2B7-ORANGE-RVB.svg.png" />]
+<br />
+<img height="100em" src="http://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Free_logo.svg/langfr-600px-Free_logo.svg.png" />
+![Orange](http://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Orange_logo.svg/langfr-110px-Orange_logo.svg.png)
+![Bouygues](http://upload.wikimedia.org/wikipedia/fr/thumb/4/44/Bouygues_Telecom.svg/langfr-220px-Bouygues_Telecom.svg.png)
+![SFR](http://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/SFR_logo_2014.png/110px-SFR_logo_2014.png)
+.center[...]
+.center[<img height="100em" src="http://www.mediatvcom.com/wp-content/uploads/2013/02/HbbTV.png" />]
+
+???
+On développe des applications une solution de CatchUP qui est packagée dans les box des opérateurs.
+
+---
+class: layout-arte
+
+<br />
+<br />
+<br />
+.center[<a href="https://itunes.apple.com/fr/app/arte/id405028510?mt=8"><img src="http://upload.wikimedia.org/wikipedia/fr/thumb/f/f8/Apple_chrome.png/110px-Apple_chrome.png"/></a>]
+<br />
+<br />
+<br />
+<br />
+.center[<a href="https://play.google.com/store/apps/details?id=tv.arte.plus7&hl=fr_FR"><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Android_robot.svg/langfr-96px-Android_robot.svg.png"/></a>]
+
 ???
 # Complexité/contraintes ARTE
 * plusieurs entités : 
@@ -42,6 +98,7 @@ class: layout-arte
 * contenu franco-allemand
 * heure de diffusion différente en France et en Allemagne
 * petites équipes techniques
+
 ---
 # Stack technique
 
@@ -59,14 +116,19 @@ class: layout-arte
 ![Vagrant](http://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Vagrant.png/150px-Vagrant.png)
 
 ---
-# A quoi servent les API d'Arte ? 
+class: center, middle, inverse
 
-* mise à disposition :
-  * des métadonnées des programmes diffusés à l'antenne (titre, description, photo, producteur, casting)
-  * des URLs des streams (mp4, hls)
-  * de flux optimisés pour une plate-forme dédiée (applications mobiles, TV connectées, ...)
-  * des statistiques de consultation nos contenus
+# À quoi servent les API d'Arte ? 
+---
 
+# Mise à disposition :
+
+* Des **métadonnées des programmes** diffusés à l'antenne (titre, description, photo, producteur, casting)
+* Des **URLs des streams** (mp4, hls)
+* De flux optimisés pour une plate-forme dédiée (applications mobiles, TV connectées, ...)
+* Des **statistiques de consultation** de nos contenus
+---
+#Exemple OPA :
 ```json
   {
     "videos": [
@@ -97,17 +159,35 @@ class: layout-arte
 
 ```
 ---
-# Développement nouvelle API (OPA)
-* **objectif** : mise à disposition de tout le contenu ARTE :
+class: center, middle, inverse
+
+# Développement d'une nouvelle API 
+### OPA va remplacer PAPI
+
+---
+# Objectifs
+
+* Mise à disposition de tout le contenu ARTE :
   * contenu antenne (broadcast, ARTE+7)
   * contenu spécifique Web (Concert, Future, Creative, Bonus web, ...)
-* socle Symfony2/MongoDB
-* reprise des fonctionnalités de l'API historique
-* synchronisation des données via messages asynchrones (RabbitMQ)
-* utilisation du standard [{json:api}](http://www.jsonapi.org)
-* micro-services : création de plusieurs composants (authentification, API programme, API Player,...)
 * sécurisé par authentification oAuth
 * suivi de l'usage (throttling)
+
+???
+Pas seulement le contenu broadcast mais également les contenus développés pour le web. On a de plus en plus de contenu créé uniquement pour le web qui dispose d'un workflow différent de publication.
+
+---
+# Architecture technique
+
+* socle Symfony2/MongoDB
+* synchronisation des données via messages asynchrones (RabbitMQ)
+* utilisation du standard [{json:api}](http://www.jsonapi.org)
+* découplage en composants autonomes (microservices ?) : 
+  * authentification
+  * OPA
+  * API Player, client de OPA
+  * ...
+
 
 ???
 # API historique (PAPI)
@@ -125,8 +205,12 @@ class: layout-arte
   * trigramme pour certaines propriétés
 
 ---
+class: center, middle, inverse
 # Migration en cours
-* Symfony2, ça marche.
+Symfony2, ça marche !
+
+
+???
 * OPA est déjà utilisé sur :
   * nombreux players sur les sites arte.tv
   * plate-forme [cinéma](http://cinema.arte.tv], nouveau site [Tracks](http://tracks.arte.tv) (développement module Drupal spécifique)
@@ -137,7 +221,10 @@ class: layout-arte
   * usine à sites
 
 ---
+class: center, middle, inverse
 # Sécurisation des API et throttling
+---
+
 * API sécurisée par authentification oAuth
 * Mise en place d'un reverse proxy authentifiant ([Openresty](http://openresty.org), distribution nginx avec support de Lua)
 * Développement de scripts [Lua](http://fr.wikipedia.org/wiki/Lua) chargés dans la configuration Nginx permettant de valider token oAuth
@@ -145,6 +232,7 @@ class: layout-arte
 * Le reverse proxy authentifiant est également en charge du throttling (exemple : 1000 requêtes/heure)
 
 ---
+class: center, middle, inverse
 # Exemple d'un process de requête à nos API
 
 ---
@@ -152,7 +240,8 @@ class: layout-arte
 # 1. Interrogation du serveur oAuth pour récupérer un token oAuth
 
 ```bash
-curl https://.../oauth/token?client_id=...&client_secret=...&grant_type=credentials
+curl https://.../oauth/token?client_id=...
+&client_secret=...&grant_type=credentials
 ```
 
 Réponse : 
@@ -277,13 +366,16 @@ end
   * [noxlogic/ratelimit-bundle](https://github.com/jaytaph/RateLimitBundle) ([details](https://www.adayinthelifeof.nl/2014/05/28/throttle-your-api-calls-ratelimitbundle/))
 * Implémentation Varnish
   * [libvmod-throttle](https://github.com/nand2/libvmod-throttle)
-* Autres solutions ? (Vos retours m'intéressent)
+* Autres solutions ? (Vos retours m'intéressent !)
 
 ---
+class: center, middle, inverse
 # Standard [{json:api}](http://www.jsonapi.org)
+---
+class: center, middle
+# **{json:api}** est une convention pour décrire un appel REST au format JSON
 
-* Convention pour décrire un appel REST au format JSON
-
+???
 > A JSON object MUST be at the root of every JSON API document. This object defines a document's "top level".
 >
 > A document's top level SHOULD contain a representation of the resource or collection of resources primarily targeted by a request (i.e. the "primary resource(s)").
@@ -299,7 +391,7 @@ end
 > No other members should be present at the top level of a document.
 
 ---
-# Exemples
+# Exemple de réponse
 
 ```bash
 GET /users?limit=1
@@ -338,7 +430,7 @@ GET /users?limit=1
 ---
 # Inclusion de documents
 
-[{json:api}](http://www.jsonapi.org) décrit la manière d'inclure des sous-documents (réduction du nom de requête)
+**{json:api}** décrit la manière d'inclure des sous-documents (réduction du nom de requête)
 
 ```bash
 GET /users?limit=1&include=groups
@@ -453,40 +545,89 @@ GET /users?id=gaston,fantasio
 Mélange de toutes les fonctionnalités de [{json:api}](http://www.jsonapi.org) 
 
 ```bash
-GET /users?id=gaston,fantasio&tags=marsupilami,spirou&fields=name&include=groups&sort=-id
+GET /users?id=gaston,fantasio&tags=marsupilami,spirou&fields=name
+&include=groups&sort=-id
 ```
 
 ---
+class: center, middle, inverse
 # Solutions mises en oeuvre 
+---
+# Surcharge de [BazingaHateoasBundle](https://github.com/willdurand/BazingaHateoasBundle) : 
+utilisation d'annotations pour ajouter les links à la volée ('serializer.post_serialize')
 
-* Surcharge de [BazingaHateoasBundle](https://github.com/willdurand/BazingaHateoasBundle)
-  * utilisation d'annotations pour ajouter les links à la volée
+```php 
+use Hateoas\Configuration\Annotation as Hateoas;
 
-* gestion des inclusions : utilisation d'un 'serializer.post_serialize'
-  * dans le cas de l'inclusion d'une seule ressource, utilisation d'une sous-requête Symfony2 ([pull-request sur jms-serializer en attente](https://github.com/schmittjoh/serializer/pull/341))
-  * dans le cas d'une inclusion multiple, utilisation de multi-curl (cache varnish)
-* limitation des attributs retournés : 
-  * [mise en place d'une classe ExclusionStrategy](http://jolicode.com/blog/how-to-implement-your-own-fields-inclusion-rules-with-jms-serializer) (ping [@damienalexandre](https://twitter.com/damienalexandre))
+/**
+ * @Hateoas\Relation("programs",
+ *     href = @Hateoas\Route("arte_api_v2_programs",
+ *         parameters = {
+ *             "programId" = "expr(object.getProgramId())",
+ *             "language" = "expr(object.getLanguage())",
+ *             "kind" = "expr(object.getKind())"
+ *         },
+ *         absolute = true
+ *     )
+ * )
+```
+
+.small[va générer : https://server/api1/programs?programId=0123456-FZD&language=fr&kind=SHOW]
 
 ---
-# Problèmes rencontrés
+# Gestion des inclusions : 
+utilisation d'un 'serializer.post_serialize'
+ * dans le cas de l'inclusion d'une seule ressource, utilisation d'une sous-requête Symfony2 ([pull-request sur jms-serializer en attente](https://github.com/schmittjoh/serializer/pull/341))
+ * dans le cas d'une inclusion multiple, utilisation de multi-curl (cache varnish)
+---
+# Limitation des attributs retournés : 
 
-* performance du JMSSerializer :
-  * création d'un bundle permettant de mettre en cache les "visitors"
-  * le bundle devrait bientôt être libéré
-  * ping [@xlacot](https://twitter.com/xlacot)
-* performance de HateoasBundle :
-  * création d'un bundle permettant de mettre en cache le mécanisme de serialization
-  * presque libre : https://github.com/ArteGEIE/ArteHateoasBundle
-  * ping [@xlacot](https://twitter.com/xlacot)
-* performance de l'hydratation de DoctrineMongoDB
+[mise en place d'une classe ExclusionStrategy](http://jolicode.com/blog/how-to-implement-your-own-fields-inclusion-rules-with-jms-serializer) (ping [@damienalexandre](https://twitter.com/damienalexandre))
+
+```php
+namespace Acme\Bundle\ApiBundle\Serializer\Exclusion;
+
+use JMS\Serializer\Exclusion\ExclusionStrategyInterface;
+
+class FieldsListExclusionStrategy implements ExclusionStrategyInterface
+...
+/**
+ * {@inheritDoc}
+ */
+public function shouldSkipProperty(PropertyMetadata $property, Context $navigatorContext)
+{
+    if (empty($this->fields)) {
+        return false;
+    }
+
+    $name = $property->serializedName ?: $property->name;
+
+    return !in_array($name, $this->fields);
+}
+```
+
+---
+class: center, middle, inverse
+# Problèmes rencontrés
+---
+# Performance du JMSSerializer :
+
+* création d'un bundle permettant de mettre en cache les "visitors"
+* le bundle devrait bientôt être libéré
+* ping [@xavierlacot](https://twitter.com/xavierlacot)
+---
+
+# Performance de HateoasBundle :
+* création d'un bundle permettant de mettre en cache le mécanisme de serialization
+* presque libre : https://github.com/ArteGEIE/ArteHateoasBundle
+* ping [@xavierlacot](https://twitter.com/xavierlacot)
 
 ---
 # Les autres bundles utilisés : 
  
  * [DoctrineMongoDBBundle](http://symfony.com/doc/current/bundles/DoctrineMongoDBBundle/index.html)
  * [FOSRestBundle](https://github.com/FriendsOfSymfony/FOSRestBundle) : 
- * [NelmioDocBundle](https://github.com/nelmio/NelmioApiDocBundle)
+ * [NelmioApiDocBundle](https://github.com/nelmio/NelmioApiDocBundle)
  * [EkinoNewrelicbundle](https://github.com/ekino/EkinoNewRelicBundle)
  * [oldsound/rabbitmq-bundle](https://github.com/videlalvaro/RabbitMqBundle)
  * ...
