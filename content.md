@@ -2,7 +2,7 @@ name: inverse
 layout: true
 class: center, middle, inverse
 ---
-#Retour d'expérience ARTE GEIE: 
+#Retour d'expérience ARTE GEIE : 
 ### Développement API
 
 ???
@@ -15,7 +15,8 @@ Raccourci clavier : C -> permet d'ouvrir une autre fenêtre avec les slides
 ???
 Je suis un spécimen rare.
 35 ans, travaille en France, diplôme d'ingénieur, pas chef de projet
----
+
+???
 # "First do it, 
 # then do it right, 
 # then do it better"
@@ -31,13 +32,12 @@ class: layout-arte
 .pull-left[.center[![France](http://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/langfr-225px-Flag_of_France.svg.png)]]
 .pull-right[.center[![Allemagne](http://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/langfr-225px-Flag_of_Germany.svg.png)]]
 
-???
-* canal 7 = M6+1
-* Pas de Dominique Chapatte
-
 ---
 class: layout-arte,center,middle
 #.line-through[Dominique Chapatte]
+
+???
+* canal 7 = M6+1
 
 ---
 class: layout-arte
@@ -74,7 +74,7 @@ background-image: url(./images/capture-tracks.png)
 .center[<img height="100em" src="http://www.mediatvcom.com/wp-content/uploads/2013/02/HbbTV.png" />]
 
 ???
-On développe des applications une solution de CatchUP qui est packagée dans les box des opérateurs.
+On développe une solution de CatchUP. Cette solution est est packagée dans les box des opérateurs.
 
 ---
 class: layout-arte
@@ -541,9 +541,11 @@ GET /users?id=gaston,fantasio
 # Création de requête complexe avec **[{json:api}](http://www.jsonapi.org)** 
 
 ```bash
-GET /users?id=gaston,fantasio&tags=marsupilami,spirou&fields=name
+GET /users?enable=true&tags=marsupilami,spirou&fields=name
 &include=groups&sort=-id
 ```
+
+Retourne la liste des utilisateurs actifs triés par **id** possédant les **tags** *marsupilami* et *spirou* en incluant les groupes associés à ces utilisateurs. On ne retourne que le champ **name**.
 
 ---
 class: center, middle, inverse
@@ -622,10 +624,11 @@ class: center, middle, inverse
 # Les autres bundles utilisés : 
  
  * [DoctrineMongoDBBundle](http://symfony.com/doc/current/bundles/DoctrineMongoDBBundle/index.html)
- * [FOSRestBundle](https://github.com/FriendsOfSymfony/FOSRestBundle) : 
+ * [FOSRestBundle](https://github.com/FriendsOfSymfony/FOSRestBundle)
  * [NelmioApiDocBundle](https://github.com/nelmio/NelmioApiDocBundle)
  * [EkinoNewrelicbundle](https://github.com/ekino/EkinoNewRelicBundle)
  * [oldsound/rabbitmq-bundle](https://github.com/videlalvaro/RabbitMqBundle)
+ * [FOSOAuthServerBundle](https://github.com/FriendsOfSymfony/FOSOAuthServerBundle)
  * ...
 
 ---
