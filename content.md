@@ -358,7 +358,7 @@ end
 * tests de la solution
   * pas de framework de tests unitaires
   * mise en place de tests fonctionnels (casper-js, [frisby.js](http://frisbyjs.com/))
-* peu de documentation (bientôt un article sur le blog d'Arte et/ou sur le blog de Jolicode - ping [@ThibZ](https://twitter.com/ThibZ))
+* peu de documentation (bientôt un article sur le blog d'Arte et/ou sur le blog de Jolicode - ping .twitter[[@ThibZ](https://twitter.com/ThibZ)])
 
 ---
 # Solutions alternatives (throttling)
@@ -582,7 +582,7 @@ utilisation d'un 'serializer.post_serialize'
 ---
 # Limitation des attributs retournés : 
 
-[mise en place d'une classe ExclusionStrategy](http://jolicode.com/blog/how-to-implement-your-own-fields-inclusion-rules-with-jms-serializer) (ping [@damienalexandre](https://twitter.com/damienalexandre))
+[mise en place d'une classe ExclusionStrategy](http://jolicode.com/blog/how-to-implement-your-own-fields-inclusion-rules-with-jms-serializer) (ping .twitter[[@damienalexandre](https://twitter.com/damienalexandre)])
 
 ```php
 namespace Acme\Bundle\ApiBundle\Serializer\Exclusion;
@@ -616,13 +616,13 @@ class: center, middle, inverse
 
 * création d'un bundle permettant de mettre en cache les "visitors"
 * le bundle devrait bientôt être libéré
-* ping [@xavierlacot](https://twitter.com/xavierlacot)
+* ping .twitter[[@xavierlacot](https://twitter.com/xavierlacot)]
 ---
 
 # Performance de HateoasBundle :
 * création d'un bundle permettant de mettre en cache le mécanisme de serialization
 * presque libre : https://github.com/ArteGEIE/ArteHateoasBundle
-* ping [@xavierlacot](https://twitter.com/xavierlacot)
+* ping .twitter[[@xavierlacot](https://twitter.com/xavierlacot)]
 
 ---
 # Les autres bundles utilisés : 
@@ -655,3 +655,4 @@ class: center, middle, inverse
 
 ---
 # Des questions ? 
+.twitter[[@`\_franek\_`](https://twitter.com/_franek_)]
