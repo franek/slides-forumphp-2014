@@ -162,7 +162,9 @@ class: center, middle, inverse
 class: center, middle, inverse
 
 # Développement d'une nouvelle API 
-### OPA va remplacer PAPI
+
+???
+ARTE dispose déjà d'une API mais qui a certains limites.
 
 ---
 # Objectifs
