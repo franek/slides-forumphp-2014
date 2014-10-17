@@ -45,7 +45,7 @@ background-image: url(./images/capture-artetv.png)
 
 ---
 class: layout-arte
-background-image: url(./images/capture-concert.png)
+background-image: url(./images/capture-future.png)
 
 ---
 class: layout-arte
@@ -53,7 +53,7 @@ background-image: url(./images/capture-creative.png)
 
 ---
 class: layout-arte
-background-image: url(./images/capture-future.png)
+background-image: url(./images/capture-concert.png)
 
 ---
 class: layout-arte
@@ -103,7 +103,6 @@ class: layout-arte
 # Stack technique
 
 ![Drupal](http://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Druplicon.vector.svg/langfr-96px-Druplicon.vector.svg.png)
-![Java](http://upload.wikimedia.org/wikipedia/fr/thumb/2/2e/Java_Logo.svg/180px-Java_Logo.svg.png 100x100)
 ![Ruby](http://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Ruby-logo-notext.png/131px-Ruby-logo-notext.png)
 ![Go](http://upload.wikimedia.org/wikipedia/fr/thumb/6/64/Go-logo-black.png/131px-Go-logo-black.png)
 ![Symfony2](http://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Symfony2.svg/250px-Symfony2.svg.png)
@@ -114,6 +113,7 @@ class: layout-arte
 ![Github](http://upload.wikimedia.org/wikipedia/commons/thumb/2/29/GitHub_logo_2013.svg/140px-GitHub_logo_2013.svg.png)
 ![docker](http://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Docker_%28container_engine%29_logo.png/250px-Docker_%28container_engine%29_logo.png)
 ![Vagrant](http://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Vagrant.png/150px-Vagrant.png)
+![Java](http://upload.wikimedia.org/wikipedia/fr/thumb/2/2e/Java_Logo.svg/131px-Java_Logo.svg.png)	
 
 ---
 class: center, middle, inverse
@@ -128,7 +128,7 @@ class: center, middle, inverse
 * De flux optimisés pour une plate-forme dédiée (applications mobiles, TV connectées, ...)
 * Des **statistiques de consultation** de nos contenus
 ---
-#Exemple OPA :
+#Exemple :
 ```json
   {
     "videos": [
@@ -169,9 +169,10 @@ ARTE dispose déjà d'une API mais qui a certains limites.
 ---
 # Objectifs
 
-* Mise à disposition de tout le contenu ARTE :
+* mise à disposition de tout le contenu ARTE :
   * contenu antenne (broadcast, ARTE+7)
   * contenu spécifique Web (Concert, Future, Creative, Bonus web, ...)
+* ouverture (open-data ?)
 * sécurisé par authentification oAuth
 * suivi de l'usage (throttling)
 
@@ -186,7 +187,7 @@ Pas seulement le contenu broadcast mais également les contenus développés pou
 * utilisation du standard [{json:api}](http://www.jsonapi.org)
 * découplage en composants autonomes (microservices ?) : 
   * authentification
-  * OPA
+  * Open Program API (OPA)
   * API Player, client de OPA
   * ...
 
@@ -206,8 +207,6 @@ Pas seulement le contenu broadcast mais également les contenus développés pou
   * pas de suivi de l'usage
   * trigramme pour certaines propriétés
 
----
-class: center, middle, inverse
 # Migration en cours
 Symfony2, ça marche !
 
@@ -362,9 +361,9 @@ end
 * peu de documentation (bientôt un article sur le blog d'Arte et/ou sur le blog de Jolicode - ping [@ThibZ](https://twitter.com/ThibZ))
 
 ---
-# Solutions alternatives
+# Solutions alternatives (throttling)
 
-* Implémentation via des bundle Symfony2 (est-ce que vous voulez vraiment recevoir une requête sur votre applicatif ?) : 
+* Implémentation au niveau du backend : il y a un bundle Symfony2 pour ça (.small[est-ce que vous voulez vraiment recevoir une requête sur votre applicatif pour gérer le throttling ?]) : 
   * [noxlogic/ratelimit-bundle](https://github.com/jaytaph/RateLimitBundle) ([details](https://www.adayinthelifeof.nl/2014/05/28/throttle-your-api-calls-ratelimitbundle/))
 * Implémentation Varnish
   * [libvmod-throttle](https://github.com/nand2/libvmod-throttle)
@@ -550,6 +549,9 @@ Retourne la liste des utilisateurs actifs triés par **id** possédant les **tag
 ---
 class: center, middle, inverse
 # Solutions mises en oeuvre 
+# pour l'implémentation de
+# **[{json:api}](http://www.jsonapi.org)**
+# dans projet Symfony2
 ---
 # Surcharge de [BazingaHateoasBundle](https://github.com/willdurand/BazingaHateoasBundle) : 
 utilisation d'annotations pour ajouter les links à la volée ('serializer.post_serialize')
@@ -607,6 +609,8 @@ public function shouldSkipProperty(PropertyMetadata $property, Context $navigato
 ---
 class: center, middle, inverse
 # Problèmes rencontrés
+# dans le cadre du développement
+# des nouvelles API (Symfony2)
 ---
 # Performance du JMSSerializer :
 
