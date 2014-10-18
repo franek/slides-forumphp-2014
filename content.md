@@ -22,9 +22,9 @@ Je m'appelle François Dume.
 layout: false
 class: layout-arte
 
-.center[<img alt="ARTE" src="http://arte.tv/apiepg_static/arte_logo_mobile_512.png" width='256' height='256' />]
-.pull-left[.center[![France](http://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/langfr-225px-Flag_of_France.svg.png)]]
-.pull-right[.center[![Allemagne](http://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/langfr-225px-Flag_of_Germany.svg.png)]]
+.center[<img alt="ARTE" src="assets/logos/arte_logo_mobile_512.png" width='256' height='256' />]
+.pull-left[.center[![France](assets/logos/france.png)]]
+.pull-right[.center[![Allemagne](assets/logos/allemagne.png)]]
 
 ???
 Je travaille chez ARTE à Strasbourg.
@@ -80,14 +80,14 @@ background-image: url(./images/capture-tracks.png)
 Tracks
 
 ---
-.center[<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/ARTE-%2B7-ORANGE-RVB.svg/487px-ARTE-%2B7-ORANGE-RVB.svg.png" />]
+.center[<img src="./assets/logos/ARTE-plus7.png" />]
 <br />
-<img height="100em" src="http://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Free_logo.svg/langfr-600px-Free_logo.svg.png" />
-![Orange](http://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Orange_logo.svg/langfr-110px-Orange_logo.svg.png)
-![Bouygues](http://upload.wikimedia.org/wikipedia/fr/thumb/4/44/Bouygues_Telecom.svg/langfr-220px-Bouygues_Telecom.svg.png)
-![SFR](http://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/SFR_logo_2014.png/110px-SFR_logo_2014.png)
+<img height="100em" src="assets/logos/Free_logo.svg.png" />
+![Orange](assets/logos/Orange_logo.svg.png)
+![Bouygues](assets/logos/Bouygues_Telecom.svg.png)
+![SFR](assets/logos/SFR_logo_2014.png)
 .center[...]
-.center[<img height="100em" src="http://www.mediatvcom.com/wp-content/uploads/2013/02/HbbTV.png" />]
+.center[<img height="100em" src="assets/logos/HbbTV.png" />]
 
 ???
 On développe une solution de CatchUP (ARTE+7). Cette solution est packagée dans la plupart des box des opérateurs.
@@ -99,12 +99,12 @@ class: layout-arte
 <br />
 <br />
 <br />
-.center[<a href="https://itunes.apple.com/fr/app/arte/id405028510?mt=8"><img src="http://upload.wikimedia.org/wikipedia/fr/thumb/f/f8/Apple_chrome.png/110px-Apple_chrome.png"/></a>]
+.center[<a href="https://itunes.apple.com/fr/app/arte/id405028510?mt=8"><img src="assets/logos/110px-Apple_chrome.png"/></a>]
 <br />
 <br />
 <br />
 <br />
-.center[<a href="https://play.google.com/store/apps/details?id=tv.arte.plus7&hl=fr_FR"><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Android_robot.svg/langfr-96px-Android_robot.svg.png"/></a>]
+.center[<a href="https://play.google.com/store/apps/details?id=tv.arte.plus7&hl=fr_FR"><img src="assets/logos/Android_robot.svg.png"/></a>]
 
 ???
 On édite également des applications mobiles, notamment pour android et Apple.
@@ -112,18 +112,18 @@ On édite également des applications mobiles, notamment pour android et Apple.
 ---
 # Stack technique
 
-![Drupal](http://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Druplicon.vector.svg/langfr-96px-Druplicon.vector.svg.png)
-![Ruby](http://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Ruby-logo-notext.png/131px-Ruby-logo-notext.png)
-![Go](http://upload.wikimedia.org/wikipedia/fr/thumb/6/64/Go-logo-black.png/131px-Go-logo-black.png)
-![Symfony2](http://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Symfony2.svg/250px-Symfony2.svg.png)
-![MongoDB](http://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/MongoDB_Logo.png/96px-MongoDB_Logo.png)
-![Redis](http://upload.wikimedia.org/wikipedia/en/thumb/6/6b/Redis_Logo.svg/200px-Redis_Logo.svg.png)
-![Newrelic](http://storefront.nr-assets.net/assets/newrelic/logo_46-15b0d64a9d6a833df7a9ae04087f7d6e.png)
-![JIRA](http://upload.wikimedia.org/wikipedia/en/thumb/b/bf/JIRA_logo.svg/150px-JIRA_logo.svg.png)
-![Github](http://upload.wikimedia.org/wikipedia/commons/thumb/2/29/GitHub_logo_2013.svg/140px-GitHub_logo_2013.svg.png)
-![docker](http://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Docker_%28container_engine%29_logo.png/250px-Docker_%28container_engine%29_logo.png)
-![Vagrant](http://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Vagrant.png/150px-Vagrant.png)
-![Java](http://upload.wikimedia.org/wikipedia/fr/thumb/2/2e/Java_Logo.svg/131px-Java_Logo.svg.png)	
+![Drupal](assets/logos/Druplicon.vector.svg.png)
+![Ruby](assets/logos/Ruby-logo-notext.png)
+![Go](assets/logos/131px-Go-logo-black.png)
+![Symfony2](assets/logos/250px-Symfony2.svg.png)
+![MongoDB](assets/logos/96px-MongoDB_Logo.png)
+![Redis](assets/logos/200px-Redis_Logo.svg.png)
+![Newrelic](assets/logos/newrelic.png)
+![JIRA](assets/logos/JIRA.png)
+![Github](assets/logos/140px-GitHub_logo_2013.svg.png)
+![docker](assets/logos/docker.png)
+![Vagrant](assets/logos/Vagrant.png)
+![Java](assets/logos/java.png)	
 
 ???
 Juste pour information, voici notre stack technique. Historiquement, nous faisions beaucoup de Java. Nous avons de plus en plus de Drupal.
@@ -766,7 +766,7 @@ layout: true
 class: center, middle, inverse
 ---
 # Merci
-(ainsi qu'à [<img height="30em" style="vertical-align:middle" src="http://jolicode.github.io/best-bundle-conf/lib/font/logo-fond-noir.svg" />](http://jolicode.com/))
+(ainsi qu'à [<img height="30em" style="vertical-align:middle" src="assets/logos/jolicode.svg" />](http://jolicode.com/))
 
 ---
 # Des questions ? 
