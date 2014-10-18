@@ -9,20 +9,14 @@ class: center, middle, inverse
 Raccourci clavier : P -> permet d'afficher le plan
 Raccourci clavier : C -> permet d'ouvrir une autre fenêtre avec les slides
 
+Bonjour à tous.
+Merci d'être venu si nombreux.
+
 ---
 # Ich heiße François Dume
 
 ???
-Je suis un spécimen rare.
-35 ans, travaille en France, diplôme d'ingénieur, pas chef de projet
-
-???
-# "First do it, 
-# then do it right, 
-# then do it better"
-
-<!-- "It’s not at all important to get it right the first time. It’s vitally important to get it right the last time."
-– Andrew Hunt and David Thomas-->
+Je m'appelle François Dume.
 
 ---
 layout: false
@@ -32,36 +26,58 @@ class: layout-arte
 .pull-left[.center[![France](http://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/langfr-225px-Flag_of_France.svg.png)]]
 .pull-right[.center[![Allemagne](http://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/langfr-225px-Flag_of_Germany.svg.png)]]
 
+???
+Je travaille chez ARTE à Strasbourg.
+ARTE est une chaine franco-allemande, disponible sur le canal 7 de votre téléviseur.
+
 ---
 class: layout-arte,center,middle
 #.line-through[Dominique Chapatte]
 
 ???
-* canal 7 = M6+1
+* Dominique Chapatte ne travaille pas chez Arte. Vous pouvez le retrouver sur M6.
 
 ---
 class: layout-arte
 background-image: url(./images/capture-artetv.png)
 
+???
+Au niveau numérique, ARTE édite un certain nombre de sites internet : arte.tv
+
 ---
 class: layout-arte
 background-image: url(./images/capture-future.png)
+
+???
+Future
 
 ---
 class: layout-arte
 background-image: url(./images/capture-creative.png)
 
+???
+Creative
+
 ---
 class: layout-arte
 background-image: url(./images/capture-concert.png)
+
+???
+Concert
 
 ---
 class: layout-arte
 background-image: url(./images/capture-cinema.png)
 
+???
+Cinéma
+
 ---
 class: layout-arte
 background-image: url(./images/capture-tracks.png)
+
+???
+Tracks
 
 ---
 .center[<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/ARTE-%2B7-ORANGE-RVB.svg/487px-ARTE-%2B7-ORANGE-RVB.svg.png" />]
@@ -74,7 +90,8 @@ background-image: url(./images/capture-tracks.png)
 .center[<img height="100em" src="http://www.mediatvcom.com/wp-content/uploads/2013/02/HbbTV.png" />]
 
 ???
-On développe une solution de CatchUP. Cette solution est est packagée dans les box des opérateurs.
+On développe une solution de CatchUP (ARTE+7). Cette solution est packagée dans la plupart des box des opérateurs.
+On développe également des applications pour les TV connectées (hbbtv).
 
 ---
 class: layout-arte
@@ -90,14 +107,7 @@ class: layout-arte
 .center[<a href="https://play.google.com/store/apps/details?id=tv.arte.plus7&hl=fr_FR"><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Android_robot.svg/langfr-96px-Android_robot.svg.png"/></a>]
 
 ???
-# Complexité/contraintes ARTE
-* plusieurs entités : 
-  * [ARTE GEIE](http://www.arte.tv/fr/arte-geie/7870412,CmC=2196658.html) (Strasbourg) : moyens techniques
-  * [ARTE France](http://www.arte.tv/fr/arte-france/7870412,CmC=2196662.html) (Paris), [ARTE Deutschland](http://www.arte.tv/fr/arte-deutschland-tv-gmbh/7870412,CmC=2196668.html) (Baden-Baden) : production de contenu
-* [soumis au code des marchés publics](http://www.arte.tv/fr/appels-d-offres/2196586.html)
-* contenu franco-allemand
-* heure de diffusion différente en France et en Allemagne
-* petites équipes techniques
+On édite également des applications mobiles, notamment pour android et Apple.
 
 ---
 # Stack technique
@@ -115,10 +125,18 @@ class: layout-arte
 ![Vagrant](http://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Vagrant.png/150px-Vagrant.png)
 ![Java](http://upload.wikimedia.org/wikipedia/fr/thumb/2/2e/Java_Logo.svg/131px-Java_Logo.svg.png)	
 
+???
+Juste pour information, voici notre stack technique. Historiquement, nous faisions beaucoup de Java. Nous avons de plus en plus de Drupal.
+On a un peu de Go, de Ruby. On a bien sûr du Symfony2 (nous allons en parler).
+Et puisque c'est la mode, on fait aussi un peu de docker ;-)
+
 ---
 class: center, middle, inverse
 
 # À quoi servent les API d'Arte ? 
+
+???
+Elles sont utilisées pour mettre à disposition du contenu à l'ensemble de nos applications/sites internet.
 ---
 
 # Mise à disposition :
@@ -172,8 +190,8 @@ ARTE dispose déjà d'une API mais qui a certains limites.
 * mise à disposition de tout le contenu ARTE :
   * contenu antenne (broadcast, ARTE+7)
   * contenu spécifique Web (Concert, Future, Creative, Bonus web, ...)
-* ouverture (open-data ?)
-* sécurisé par authentification oAuth
+* ouverture (Open Data ?)
+* sécurisée par authentification oAuth
 * suivi de l'usage (throttling)
 
 ???
@@ -210,8 +228,6 @@ Pas seulement le contenu broadcast mais également les contenus développés pou
 # Migration en cours
 Symfony2, ça marche !
 
-
-???
 * OPA est déjà utilisé sur :
   * nombreux players sur les sites arte.tv
   * plate-forme [cinéma](http://cinema.arte.tv], nouveau site [Tracks](http://tracks.arte.tv) (développement module Drupal spécifique)
@@ -226,11 +242,17 @@ class: center, middle, inverse
 # Sécurisation des API et throttling
 ---
 
-* API sécurisée par authentification oAuth
-* Mise en place d'un reverse proxy authentifiant ([Openresty](http://openresty.org), distribution nginx avec support de Lua)
-* Développement de scripts [Lua](http://fr.wikipedia.org/wiki/Lua) chargés dans la configuration Nginx permettant de valider token oAuth
-* Toutes les API "sécurisées" sont protégées par ce Reverse Proxy
-* Le reverse proxy authentifiant est également en charge du throttling (exemple : 1000 requêtes/heure)
+class: middle
+
+* API sécurisée par authentification **oAuth 2.0**
+* Mise en place d'un **reverse proxy authentifiant** ([Openresty](http://openresty.org), distribution nginx avec support de Lua)
+* Développement de scripts [Lua](http://fr.wikipedia.org/wiki/Lua) chargés dans la configuration nginx permettant de valider token oAuth
+* Toutes les API "sécurisées" sont protégées par ce reverse proxy
+* Le reverse proxy authentifiant est également en charge du **throttling** (exemple : 1000 requêtes/heure)
+
+???
+* Ce reverse proxy est utilisable avec tout type de serveur applicatif (Symfony2, Ruby, Java).
+* Le serveur applicatif n'a pas connaissance des utilisateurs. Il ne possède que la notion de rôles.
 
 ---
 class: center, middle, inverse
@@ -295,7 +317,110 @@ Server: openresty
 ---
 # Schéma d'architecture globale
 
-![schéma d'artchitecture](./schemas/architecture-api.png)
+.center[<img src="./schemas/architecture-api.svg" alt="schéma d'artchitecture" height="680em" />]
+
+???
+Un Reverse Proxy qui protège toutes nos applications.
+Une application oauth : Symfony2, FOSOauthServerBundle, fournisseur d'identités
+Plusieurs API (api1, api2).
+Une base de données clé-valeurs associée au serveur nginx. Cette base de donnée sert de cache et de stockage du suivi de l'usage (Redis, mémoire partagée, memcache).
+
+Dans les prochaines slides, je vais essayer de décomposer le mécanisme permettant de gérer la sécurité de nos API.
+
+---
+(1) L'utilisateur fait une requête à une de nos API avec un token
+
+```bash
+curl -I https://.../api1/resource?access_token=MDBjYzMzNTRjNTQxMjE2NGI0ODJkNTc3NGJhODFlOTc0MDY2ZjMyZTIxY2ExYjI1ZGIxYWYzMDZmYTgzM2UxMA
+```
+
+???
+Il passe en paramètre le access_token oAuth.
+
+---
+(2) nginx va essayer de valider le token oAuth en effectuant une sous-requête au fournisseur d'identité (oAuth 2.0) :
+
+```lua
+local token = ngx.var.arg_access_token
+local subrequest = ngx.location.capture(
+	'/oauth/checkToken?access_token=' .. token
+)
+if subrequest.status == ngx.HTTP_OK then
+  local content = subrequest.body
+  ...
+end
+```
+
+???
+Cette sous-requête ne sera exécutée que lorsque nginx ne connait pas le token.
+
+---
+(3) Si le token est valide, le serveur oAuth va retourner au serveur nginx des informations liées au token :
+
+```data
+HTTP/1.1 200 OK
+Server: openresty
+...
+{
+"client": "Tracks",
+"rateLimit": 1000,
+"expires": 3600,
+"roles" : "USER"
+...
+}
+```
+---
+(4) Ces informations seront stockées par nginx dans une base de données clé-valeur, l'attribut "remaining" est décrémenté.
+
+
+```lua
+local succ, err, forcible = cache:set(key, content, contentLife)
+...
+cache:incr('throttle_' .. key, 1)
+```
+
+.small[N.B : À la requête suivante, le Reverse Proxy n'interrogera plus le serveur oAuth, il lira son cache et décrémentera "remaining".]
+
+---
+
+(5) Si le token est valide, le Reverse Proxy accepte de rediriger la requête au backend et ajoute des entêtes à la requête (rôles) :
+```data
+GET http://api1.local/api1/resource
+X-ARTE-Roles: USER
+```
+
+La réponse du backend contient bien un entête pour faire varier le cache : 
+```data
+Vary: X-ARTE-Roles
+```
+
+---
+
+(6) Le backend traite la réponse. En renvoyant la réponse, le Reverse Proxy ajoute les entêtes de suivi d'usage :
+
+```lua
+ngx.header["X-Rate-Limit-Limit"] = userRateLimit
+ngx.header["X-Rate-Limit-Remaining"] = remaining
+ngx.header["X-Rate-Limit-Reset"] = expiresAt
+```
+
+---
+(7) \o/ L'utilisateur reçoit la réponse
+
+```data
+HTTP/1.1 200 OK
+Server: openresty
+Content-Type: application/vnd.api+json
+Cache-Control: max-age=60, public, s-maxage=60
+Vary: X-Roles
+X-Rate-Limit-Limit: 5000
+X-Rate-Limit-Remaining: 4997
+X-Rate-Limit-Reset: 1413659922
+
+{
+	"content" : ...
+}
+```
 
 ---
 # Configuration nginx
@@ -315,7 +440,7 @@ location /api2 {
     proxy_pass http://api2.local;
 } 
 ```
-Pour aller plus loin, [documentation du module Lua pour Nginx](http://wiki.nginx.org/HttpLuaModule)
+Pour aller plus loin, [documentation du module Lua pour nginx](http://wiki.nginx.org/HttpLuaModule)
 
 ???
 Description des directives
@@ -327,7 +452,7 @@ Description des directives
   * header_filter_by_lua : permet d'ajouter des headers dans la réponse
 
 ---
-# Exemple de scripts Lua
+# Atteinte du quota
 
 ```lua
 local userRateLimit = 1000
@@ -337,16 +462,6 @@ if tonumber(count) > userRateLimit then
     ngx.status = 429
     ngx.say('{"message": "API rate limit exceeded. See documentation for details."}')
     ngx.exit(429)
-end
-```
-
-sous-requête : 
-```lua
-local token = ngx.var.arg_access_token
-local subrequest = ngx.location.capture('/oauth/checkToken?access_token=' .. token)
-if subrequest.status == ngx.HTTP_OK then
-  local content = subrequest.body
-  ...
 end
 ```
 
