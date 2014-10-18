@@ -110,27 +110,6 @@ class: layout-arte
 On édite également des applications mobiles, notamment pour android et Apple.
 
 ---
-# Stack technique
-
-![Drupal](assets/logos/Druplicon.vector.svg.png)
-![Ruby](assets/logos/Ruby-logo-notext.png)
-![Go](assets/logos/131px-Go-logo-black.png)
-![Symfony2](assets/logos/250px-Symfony2.svg.png)
-![MongoDB](assets/logos/96px-MongoDB_Logo.png)
-![Redis](assets/logos/200px-Redis_Logo.svg.png)
-![Newrelic](assets/logos/newrelic.png)
-![JIRA](assets/logos/JIRA.png)
-![Github](assets/logos/140px-GitHub_logo_2013.svg.png)
-![docker](assets/logos/docker.png)
-![Vagrant](assets/logos/Vagrant.png)
-![Java](assets/logos/java.png)	
-
-???
-Juste pour information, voici notre stack technique. Historiquement, nous faisions beaucoup de Java. Nous avons de plus en plus de Drupal.
-On a un peu de Go, de Ruby. On a bien sûr du Symfony2 (nous allons en parler).
-Et puisque c'est la mode, on fait aussi un peu de docker ;-)
-
----
 class: center, middle, inverse
 
 # À quoi servent les API d'Arte ? 
@@ -740,6 +719,43 @@ class: center, middle, inverse
 * ping .twitter[[@xavierlacot](https://twitter.com/xavierlacot)]
 
 ---
+# Next ? 
+* monitoring de l'usage : script Lua pour envoyer des métriques à StatsD ?
+* mise à disposition de SDK pour faciliter l'utilisation de l'API par des partenaires externes : 
+  * Work In Progress : Module Drupal
+* ouvrir le code du serveur de l'API (cf. [The Guardian](https://github.com/guardian))
+* ouvrir l'API à des développeurs externes (Open Data ?)
+* HHVM ? 
+* développement d'une app [Arte Firefox OS](https://www.mozilla.org/fr/firefox/os/) ? 
+
+---
+name: inverse
+class: center, middle, inverse
+
+# Annexes
+
+---
+# Stack technique
+
+![Drupal](assets/logos/Druplicon.vector.svg.png)
+![Ruby](assets/logos/Ruby-logo-notext.png)
+![Go](assets/logos/131px-Go-logo-black.png)
+![Symfony2](assets/logos/250px-Symfony2.svg.png)
+![MongoDB](assets/logos/96px-MongoDB_Logo.png)
+![Redis](assets/logos/200px-Redis_Logo.svg.png)
+![Newrelic](assets/logos/newrelic.png)
+![JIRA](assets/logos/JIRA.png)
+![Github](assets/logos/140px-GitHub_logo_2013.svg.png)
+![docker](assets/logos/docker.png)
+![Vagrant](assets/logos/Vagrant.png)
+![Java](assets/logos/java.png)	
+
+???
+Juste pour information, voici notre stack technique. Historiquement, nous faisions beaucoup de Java. Nous avons de plus en plus de Drupal.
+On a un peu de Go, de Ruby. On a bien sûr du Symfony2 (nous allons en parler).
+Et puisque c'est la mode, on fait aussi un peu de docker ;-)
+
+---
 # Les autres bundles utilisés : 
  
  * [DoctrineMongoDBBundle](http://symfony.com/doc/current/bundles/DoctrineMongoDBBundle/index.html)
@@ -749,16 +765,6 @@ class: center, middle, inverse
  * [oldsound/rabbitmq-bundle](https://github.com/videlalvaro/RabbitMqBundle)
  * [FOSOAuthServerBundle](https://github.com/FriendsOfSymfony/FOSOAuthServerBundle)
  * ...
-
----
-# Next ? 
-* monitoring de l'usage : script Lua pour envoyer des métriques à StatsD ?
-* mise à disposition de SDK pour faciliter l'utilisation de l'API par des partenaires externes : 
-  * Work In Progress : Module Drupal
-* ouvrir le code du serveur de l'API (cf. [The Guardian](https://github.com/guardian))
-* ouvrir l'API à des développeurs externes (Open Data ?)
-* HHVM ? 
-* développement d'une app [Arte Firefox OS](https://www.mozilla.org/fr/firefox/os/) ? 
 
 ---
 name: inverse
