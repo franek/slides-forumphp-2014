@@ -30,12 +30,15 @@ class: layout-arte
 Je travaille chez ARTE à Strasbourg.
 ARTE est une chaine franco-allemande, disponible sur le canal 7 de votre téléviseur.
 
----
+<!-- 
+-
 class: layout-arte,center,middle
 #.line-through[Dominique Chapatte]
 
 ???
 * Dominique Chapatte ne travaille pas chez Arte. Vous pouvez le retrouver sur M6.
+
+-->
 
 ---
 class: layout-arte
@@ -49,35 +52,35 @@ class: layout-arte
 background-image: url(./images/capture-future.png)
 
 ???
-Future
+Future, plateforme dédiée à la science
 
 ---
 class: layout-arte
 background-image: url(./images/capture-creative.png)
 
 ???
-Creative
+Creative, plateforme dédiée aux arts visuels et numériques
 
 ---
 class: layout-arte
 background-image: url(./images/capture-concert.png)
 
 ???
-Concert
+Concert, anciennement Arte Live Web
 
 ---
 class: layout-arte
 background-image: url(./images/capture-cinema.png)
 
 ???
-Cinéma
+Cinéma, qui permet de retrouver les films diffusés à l'antenne
 
 ---
 class: layout-arte
 background-image: url(./images/capture-tracks.png)
 
 ???
-Tracks
+Tracks, exemple de site d'une émission
 
 ---
 .center[<img src="./assets/logos/ARTE-plus7.png" />]
@@ -115,7 +118,7 @@ class: center, middle, inverse
 # We need .small[_(to be)_] API !
 
 ???
-Elles sont utilisées pour mettre à disposition du contenu à l'ensemble de nos applications/sites internet.
+Pour pouvoir développer ces magnifiques applications, nous avons besoin d'API.
 ---
 
 # Mise à disposition :
@@ -124,6 +127,10 @@ Elles sont utilisées pour mettre à disposition du contenu à l'ensemble de nos
 * Des **URLs des streams** (mp4, hls)
 * De flux optimisés pour une plate-forme dédiée (applications mobiles, TV connectées, ...)
 * Des **statistiques de consultation** de nos contenus
+
+???
+plage de droits, heures de diffusion
+
 ---
 #Exemple :
 ```json
@@ -155,13 +162,11 @@ Elles sont utilisées pour mettre à disposition du contenu à l'ensemble de nos
             "reassemblyRef": "A",
 
 ```
+
 ---
 class: center, middle, inverse
 
 # Développement d'une nouvelle API 
-
-???
-ARTE dispose déjà d'une API mais qui a certains limites.
 
 ---
 # Objectifs
@@ -170,7 +175,7 @@ ARTE dispose déjà d'une API mais qui a certains limites.
   * contenu antenne (broadcast, ARTE+7)
   * contenu spécifique Web (Concert, Future, Creative, Bonus web, ...)
 * ouverture (Open Data ?)
-* sécurisée par authentification oAuth
+* authentification oAuth
 * suivi de l'usage (throttling)
 
 ???
@@ -188,34 +193,6 @@ Pas seulement le contenu broadcast mais également les contenus développés pou
   * API Player, client de OPA
   * ...
 
-
-???
-# API historique (PAPI)
-* JAVA/MongoDB
-* batch de synchro ORACLE -> MongoDB
-* points forts : 
-  * performance 
-    * en moyenne 1500 requêtes/min sur les backends - hors Varnish/CDN
-    * temps de réponse : <50ms
-  * utilisée par de nombreux partenaires
-* points faibles
-  * asynchrone (synchro ORACLE / crontab)
-  * uniquement contenu broadcast (contenu diffusé à l'antenne) ainsi que certains "habillages" (bande-annonce, bonus, ...)
-  * pas de suivi de l'usage
-  * trigramme pour certaines propriétés
-
-# Migration en cours
-Symfony2, ça marche !
-
-* OPA est déjà utilisé sur :
-  * nombreux players sur les sites arte.tv
-  * plate-forme [cinéma](http://cinema.arte.tv], nouveau site [Tracks](http://tracks.arte.tv) (développement module Drupal spécifique)
-  * une partie des applications mobiles
-* mise à jour prévue pour :
-  * les applications TV connectées (fin d'année)
-  * [concert.arte.tv](http://concert.arte.tv)
-  * usine à sites
-
 ---
 class: center, middle, inverse
 # Sécurisation des API et throttling
@@ -225,7 +202,7 @@ class: middle
 
 * API sécurisée par authentification **oAuth 2.0**
 * Mise en place d'un **reverse proxy authentifiant** ([Openresty](http://openresty.org), distribution nginx avec support de Lua)
-* Développement de scripts [Lua](http://fr.wikipedia.org/wiki/Lua) chargés dans la configuration nginx permettant de valider token oAuth
+* Développement de scripts [Lua](http://fr.wikipedia.org/wiki/Lua) chargés dans la configuration nginx permettant de valider le token oAuth
 * Toutes les API "sécurisées" sont protégées par ce reverse proxy
 * Le reverse proxy authentifiant est également en charge du **throttling** (exemple : 1000 requêtes/heure)
 
@@ -304,8 +281,6 @@ Une application oauth : Symfony2, FOSOauthServerBundle, fournisseur d'identités
 Plusieurs API (api1, api2).
 Une base de données clé-valeurs associée au serveur nginx. Cette base de donnée sert de cache et de stockage du suivi de l'usage (Redis, mémoire partagée, memcache).
 
-Dans les prochaines slides, je vais essayer de décomposer le mécanisme permettant de gérer la sécurité de nos API.
-
 ---
 (1) L'utilisateur fait une requête à une de nos API avec un token
 
@@ -322,7 +297,7 @@ Il passe en paramètre le access_token oAuth.
 ```lua
 local token = ngx.var.arg_access_token
 local subrequest = ngx.location.capture(
-	'/oauth/checkToken?access_token=' .. token
+	'/oauth/verifToken?access_token=' .. token
 )
 if subrequest.status == ngx.HTTP_OK then
   local content = subrequest.body
@@ -391,7 +366,7 @@ HTTP/1.1 200 OK
 Server: openresty
 Content-Type: application/vnd.api+json
 Cache-Control: max-age=60, public, s-maxage=60
-Vary: X-Roles
+Vary: X-ARTE-Roles
 X-Rate-Limit-Limit: 5000
 X-Rate-Limit-Remaining: 4997
 X-Rate-Limit-Reset: 1413659922
@@ -426,6 +401,7 @@ Description des directives
   * init_by_lua : script lua exécuté au démarrage du processus nginx principal (inclusion de librairie)
   * init_worker_by_lua : script lua exécuté au démarrage d'un worker nginx
   * content_by_lua : script de génération de contenu (~= php)
+  * log_by_lua : est appelé à chaque écriture de log
   * rewrite_by_lua : script exécuté après un traitement de réécriture d'URL
   * access_by_lua : script intervenant lors de l'accès à une ressource (permet de protéger une URL, par exemple)
   * header_filter_by_lua : permet d'ajouter des headers dans la réponse
@@ -491,36 +467,30 @@ L'objectif de JSON API est conçu pour limiter le nombre de requêtes et la tail
 # Exemple de réponse
 
 ```bash
-GET /users?limit=1
+GET /posts?limit=1
 ```
 
 ```json
 {
-  "meta": {
-      "users": {
-          "page": 1,
-          "limit": 1,
-          "pages": 5,
-          "totalCount": 5,
-          "href": "https://server/users",
-          "links": {
-              "first": "https://server/users?limit=5&page=1",
-              "next": "https://server/users?limit=5&page=2",                
-              "next": "https://server/users?limit=5&page=5",                
-          }
-      }
-  },
-  "users": [
-      {
-          "id": "gaston",
-          "username": "Gaston",
-          "href": "https://server/users/gaston",
-          "links": {
-              "groups": {"href": "https://server/groups?user=gaston"}
-          }
-      }
+  "links": {
+    "posts.author": {
+      "href": "http://example.com/people/{posts.author}",
+      "type": "people"
+    },
+    "posts.comments": {
+      "href": "http://example.com/comments/{posts.comments}",
+      "type": "comments"
     }
-  ]
+  },
+  "posts": [{
+    "id": "1",
+    "href" : "http://example.com/posts/1"
+    "title": "Rails is Omakase",
+    "links": {
+      "author": "9",
+      "comments": [ "5", "12", "17", "20" ]
+    }
+  }]
 }
 ```
 
@@ -754,7 +724,7 @@ class: center, middle, inverse
 
 ???
 Juste pour information, voici notre stack technique. Historiquement, nous faisions beaucoup de Java. Nous avons de plus en plus de Drupal.
-On a un peu de Go, de Ruby. On a bien sûr du Symfony2 (nous allons en parler).
+On a un peu de Go, de Ruby. On a bien sûr du Symfony2.
 Et puisque c'est la mode, on fait aussi un peu de docker ;-)
 
 ---
