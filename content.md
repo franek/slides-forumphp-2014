@@ -112,7 +112,7 @@ On édite également des applications mobiles, notamment pour android et Apple.
 ---
 class: center, middle, inverse
 
-# À quoi servent les API d'Arte ? 
+# We need .small[_(to be)_] API !
 
 ???
 Elles sont utilisées pour mettre à disposition du contenu à l'ensemble de nos applications/sites internet.
@@ -471,6 +471,8 @@ class: center, middle
 # **[{json:api}](http://www.jsonapi.org)**  est une convention pour décrire un appel REST au format JSON
 
 ???
+L'objectif de JSON API est conçu pour limiter le nombre de requêtes et la taille des requêtes à réaliser entre le client et le serveur.
+
 > A JSON object MUST be at the root of every JSON API document. This object defines a document's "top level".
 >
 > A document's top level SHOULD contain a representation of the resource or collection of resources primarily targeted by a request (i.e. the "primary resource(s)").
@@ -726,7 +728,7 @@ class: center, middle, inverse
 * ouvrir le code du serveur de l'API (cf. [The Guardian](https://github.com/guardian))
 * ouvrir l'API à des développeurs externes (Open Data ?)
 * HHVM ? 
-* développement d'une app [Arte Firefox OS](https://www.mozilla.org/fr/firefox/os/) ? 
+<!--* développement d'une app [Arte Firefox OS](https://www.mozilla.org/fr/firefox/os/) ? -->
 
 ---
 name: inverse
