@@ -2,7 +2,7 @@ name: inverse
 layout: true
 class: center, middle, inverse
 ---
-#Retour d'expérience ARTE GEIE : 
+#Retour d'expérience ARTE GEIE :
 ### Développement API
 
 ???
@@ -30,7 +30,7 @@ class: layout-arte
 Je travaille chez ARTE à Strasbourg.
 ARTE est une chaine franco-allemande, disponible sur le canal 7 de votre téléviseur.
 
-<!-- 
+<!--
 -
 class: layout-arte,center,middle
 #.line-through[Dominique Chapatte]
@@ -149,7 +149,7 @@ plage de droits, heures de diffusion
             "shortDescription": "Depuis Down The Way en 2010, Angus et Julia s'\u00e9taient \u00e9chapp\u00e9s chacun de leur c\u00f4t\u00e9 chantant l'un sans l'autre pendant un temps. La s\u00e9paration ne f\u00fbt heureusement pas d\u00e9finitive puisque les fr\u00e8res et soeurs retrouvent aujourd'hui le chemin vers de nouvelles sc\u00e8nes. Les retrouvailles se scellent \u00e9galement dans un troisi\u00e8me album o\u00f9 les puret\u00e9s folk et les m\u00e9lodies fredonn\u00e9es c\u00f4toient les ballades cotonneuses et les mots doux. ",
             "producer": "ARTE FRANCE",
             "videoRightsBegin": "2014-08-25T17:00:00Z",
-            "videoRightsEnd": "2015-02-25T22:59:00Z",            
+            "videoRightsEnd": "2015-02-25T22:59:00Z",
             "mainImage": {
                 "name": "055075-000_1392179_32_202.jpg",
                 "extension": "jpg",
@@ -166,7 +166,7 @@ plage de droits, heures de diffusion
 ---
 class: center, middle, inverse
 
-# Développement d'une nouvelle API 
+# Développement d'une nouvelle API
 
 ---
 # Objectifs
@@ -187,7 +187,7 @@ Pas seulement le contenu broadcast mais également les contenus développés pou
 * socle Symfony2/MongoDB
 * synchronisation des données via messages asynchrones (RabbitMQ)
 * utilisation du standard [{json:api}](http://www.jsonapi.org)
-* découplage en composants autonomes (microservices ?) : 
+* découplage en composants autonomes (microservices ?) :
   * authentification
   * Open Program API (OPA)
   * API Player, client de OPA
@@ -223,14 +223,14 @@ curl https://.../oauth/token?client_id=...
 &client_secret=...&grant_type=credentials
 ```
 
-Réponse : 
+Réponse :
 ```json
 {
-"access_token":"MDBjYzMzNTRjNTQxMjE2NGI0ODJkNTc3NGJhODFlOTc0MDY2ZjMyZTIxY2ExYjI1ZGIxYWYzMDZmYTgzM2UxMA",
+"access_token":"MDBjYzMzNTRjNTQxM...",
 "expires_in":3600,
 "token_type":"bearer",
 "scope":"user",
-"refresh_token":"ZTJjZTEyOWFiNjQ1YTkwMWFhYmY4NjZhYmU3YTc3NjJiYzNlNWIyY2FlYjlhYjQ1MzAyOTA4OGFmZjA0YmI1Ng",
+"refresh_token":"ZTJjZTEyOWFiNjQ1YTkw...",
 "roles":["USER"],
 "rateLimit":1000
 }
@@ -242,7 +242,7 @@ Réponse :
 # 2. Utilisation du token
 
 ```bash
-curl -I https://.../api1/resource?access_token=MDBjYzMzNTRjNTQxMjE2NGI0ODJkNTc3NGJhODFlOTc0MDY2ZjMyZTIxY2ExYjI1ZGIxYWYzMDZmYTgzM2UxMA
+curl -I https://.../api1/resource?access_token=MDBjY...
 ```
 
 ```data
@@ -262,7 +262,7 @@ X-Rate-Limit-Reset: 1412887899
 # 3. Après 1000 requêtes...
 
 ```bash
-curl -I https://.../api1/resource?access_token=MDBjYzMzNTRjNTQxMjE2NGI0ODJkNTc3NGJhODFlOTc0MDY2ZjMyZTIxY2ExYjI1ZGIxYWYzMDZmYTgzM2UxMA
+curl -I https://.../api1/resource?access_token=MDBjY...
 ```
 
 ```data
@@ -285,7 +285,7 @@ Une base de données clé-valeurs associée au serveur nginx. Cette base de donn
 (1) L'utilisateur fait une requête à une de nos API avec un token
 
 ```bash
-curl -I https://.../api1/resource?access_token=MDBjYzMzNTRjNTQxMjE2NGI0ODJkNTc3NGJhODFlOTc0MDY2ZjMyZTIxY2ExYjI1ZGIxYWYzMDZmYTgzM2UxMA
+curl -I https://.../api1/resource?access_token=MDBjY...
 ```
 
 ???
@@ -328,7 +328,9 @@ Server: openresty
 
 
 ```lua
-local succ, err, forcible = cache:set(key, content, contentLife)
+local succ, err, forcible = cache:set(
+  key, content, contentLife
+)
 ...
 cache:incr('throttle_' .. key, 1)
 ```
@@ -343,7 +345,7 @@ GET http://api1.local/api1/resource
 X-ARTE-Roles: USER
 ```
 
-La réponse du backend contient bien un entête pour faire varier le cache : 
+La réponse du backend contient bien un entête pour faire varier le cache :
 ```data
 Vary: X-ARTE-Roles
 ```
@@ -383,8 +385,8 @@ X-Rate-Limit-Reset: 1413659922
 location /api1 {
     # lua_code_cache off; # Dev : disable cache
     set $roles ''; # This variable is set by lua script
-    access_by_lua_file /chemin/vers/oauth-throttle.lua;
-    header_filter_by_lua_file /chemin/vers/oauth-header-filter.lua;
+    access_by_lua_file /dir/oauth-throttle.lua;
+    header_filter_by_lua_file /dir/header-filter.lua;
     proxy_pass http://api1.local;
     proxy_set_header X-Roles $roles;
 }
@@ -392,7 +394,7 @@ location /api1 {
 # api2 n'est pas protégé par oAuth
 location /api2 {
     proxy_pass http://api2.local;
-} 
+}
 ```
 Pour aller plus loin, [documentation du module Lua pour nginx](http://wiki.nginx.org/HttpLuaModule)
 
@@ -415,7 +417,13 @@ count = cache:get('throttle_' .. name)
 if tonumber(count) > userRateLimit then
     ngx.header.content_type = 'application/json'
     ngx.status = 429
-    ngx.say('{"message": "API rate limit exceeded. See documentation for details."}')
+    ngx.say('
+      {
+        "message":
+        "API rate limit exceeded.
+        See documentation for details."
+      }
+    ')
     ngx.exit(429)
 end
 ```
@@ -433,7 +441,7 @@ end
 ---
 # Solutions alternatives (throttling)
 
-* Implémentation au niveau du backend : il y a un bundle Symfony2 pour ça (.small[est-ce que vous voulez vraiment recevoir une requête sur votre applicatif pour gérer le throttling ?]) : 
+* Implémentation au niveau du backend : il y a un bundle Symfony2 pour ça (.small[est-ce que vous voulez vraiment recevoir une requête sur votre applicatif pour gérer le throttling ?]) :
   * [noxlogic/ratelimit-bundle](https://github.com/jaytaph/RateLimitBundle) ([details](https://www.adayinthelifeof.nl/2014/05/28/throttle-your-api-calls-ratelimitbundle/))
 * Implémentation Varnish
   * [libvmod-throttle](https://github.com/nand2/libvmod-throttle)
@@ -533,7 +541,7 @@ GET /users?limit=1&include=groups
 
 ```
 ---
-**[{json:api}](http://www.jsonapi.org)** décrit comment limiter les attributs retournés : 
+**[{json:api}](http://www.jsonapi.org)** décrit comment limiter les attributs retournés :
 ```bash
 GET /users?limit=1&fields=id
 ```
@@ -596,14 +604,14 @@ GET /users?id=gaston,fantasio
           "links": {
               "groups": {"href": "https://server/groups?user=fantasio"}
           }
-      }      
+      }
     }
   ]
 }
 ```
 
 ---
-# Création de requête complexe avec **[{json:api}](http://www.jsonapi.org)** 
+# Création de requête complexe avec **[{json:api}](http://www.jsonapi.org)**
 
 ```bash
 GET /users?enable=true&tags=marsupilami,spirou&fields=name
@@ -614,15 +622,15 @@ Retourne la liste des utilisateurs actifs triés par **id** possédant les **tag
 
 ---
 class: center, middle, inverse
-# Solutions mises en oeuvre 
+# Solutions mises en oeuvre
 # pour l'implémentation de
 # **[{json:api}](http://www.jsonapi.org)**
 # dans projet Symfony2
 ---
-# Surcharge de [BazingaHateoasBundle](https://github.com/willdurand/BazingaHateoasBundle) : 
+# Surcharge de [BazingaHateoasBundle](https://github.com/willdurand/BazingaHateoasBundle) :
 utilisation d'annotations pour ajouter les links à la volée ('serializer.post_serialize')
 
-```php 
+```php
 use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
@@ -641,12 +649,12 @@ use Hateoas\Configuration\Annotation as Hateoas;
 .small[va générer : https://server/api1/programs?programId=0123456-FZD&language=fr&kind=SHOW]
 
 ---
-# Gestion des inclusions : 
+# Gestion des inclusions :
 utilisation d'un 'serializer.post_serialize'
  * dans le cas de l'inclusion d'une seule ressource, utilisation d'une sous-requête Symfony2 ([pull-request sur jms-serializer en attente](https://github.com/schmittjoh/serializer/pull/341))
  * dans le cas d'une inclusion multiple, utilisation de multi-curl (cache varnish)
 ---
-# Limitation des attributs retournés : 
+# Limitation des attributs retournés :
 
 [mise en place d'une classe ExclusionStrategy](http://jolicode.com/blog/how-to-implement-your-own-fields-inclusion-rules-with-jms-serializer) (ping .twitter[[@damienalexandre](https://twitter.com/damienalexandre)])
 
@@ -691,13 +699,13 @@ class: center, middle, inverse
 * ping .twitter[[@xavierlacot](https://twitter.com/xavierlacot)]
 
 ---
-# Next ? 
+# Next ?
 * monitoring de l'usage : script Lua pour envoyer des métriques à StatsD ?
-* mise à disposition de SDK pour faciliter l'utilisation de l'API par des partenaires externes : 
+* mise à disposition de SDK pour faciliter l'utilisation de l'API par des partenaires externes :
   * Work In Progress : Module Drupal
 * ouvrir le code du serveur de l'API (cf. [The Guardian](https://github.com/guardian))
 * ouvrir l'API à des développeurs externes (Open Data ?)
-* HHVM ? 
+* HHVM ?
 <!--* développement d'une app [Arte Firefox OS](https://www.mozilla.org/fr/firefox/os/) ? -->
 
 ---
@@ -720,7 +728,7 @@ class: center, middle, inverse
 ![Github](assets/logos/140px-GitHub_logo_2013.svg.png)
 ![docker](assets/logos/docker.png)
 ![Vagrant](assets/logos/Vagrant.png)
-![Java](assets/logos/java.png)	
+![Java](assets/logos/java.png)
 
 ???
 Juste pour information, voici notre stack technique. Historiquement, nous faisions beaucoup de Java. Nous avons de plus en plus de Drupal.
@@ -728,8 +736,8 @@ On a un peu de Go, de Ruby. On a bien sûr du Symfony2.
 Et puisque c'est la mode, on fait aussi un peu de docker ;-)
 
 ---
-# Les autres bundles utilisés : 
- 
+# Les autres bundles utilisés :
+
  * [DoctrineMongoDBBundle](http://symfony.com/doc/current/bundles/DoctrineMongoDBBundle/index.html)
  * [FOSRestBundle](https://github.com/FriendsOfSymfony/FOSRestBundle)
  * [NelmioApiDocBundle](https://github.com/nelmio/NelmioApiDocBundle)
@@ -747,5 +755,5 @@ class: center, middle, inverse
 (ainsi qu'à [<img height="30em" style="vertical-align:middle" src="assets/logos/jolicode.svg" />](http://jolicode.com/))
 
 ---
-# Des questions ? 
+# Des questions ?
 .twitter[[@`\_franek\_`](https://twitter.com/_franek_)]
