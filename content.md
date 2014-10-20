@@ -97,17 +97,10 @@ On développe une solution de CatchUP (ARTE+7). Cette solution est packagée dan
 On développe également des applications pour les TV connectées (hbbtv).
 
 ---
-class: layout-arte
+class: layout-arte, middle
 
-<br />
-<br />
-<br />
-.center[<a href="https://itunes.apple.com/fr/app/arte/id405028510?mt=8"><img src="assets/logos/110px-Apple_chrome.png"/></a>]
-<br />
-<br />
-<br />
-<br />
-.center[<a href="https://play.google.com/store/apps/details?id=tv.arte.plus7&hl=fr_FR"><img src="assets/logos/Android_robot.svg.png"/></a>]
+.pull-left[.center[<a href="https://itunes.apple.com/fr/app/arte/id405028510?mt=8"><img  width="89px"  src="assets/logos/110px-Apple_chrome.png"/></a>]]
+.pull-right[.center[<a href="https://play.google.com/store/apps/details?id=tv.arte.plus7&hl=fr_FR"><img src="assets/logos/Android_robot.svg.png"/></a>]]
 
 ???
 On édite également des applications mobiles, notamment pour android et Apple.
@@ -125,7 +118,7 @@ Pour pouvoir développer ces magnifiques applications, nous avons besoin d'API.
 
 * Des **métadonnées des programmes** diffusés à l'antenne (titre, description, photo, producteur, casting)
 * Des **URLs des streams** (mp4, hls)
-* De flux optimisés pour une plate-forme dédiée (applications mobiles, TV connectées, ...)
+<!--* De flux optimisés pour une plate-forme dédiée (applications mobiles, TV connectées, ...)-->
 * Des **statistiques de consultation** de nos contenus
 
 ???
@@ -232,7 +225,7 @@ Réponse :
 "scope":"user",
 "refresh_token":"ZTJjZTEyOWFiNjQ1YTkw...",
 "roles":["USER"],
-"rateLimit":1000
+"rate_limit":1000
 }
 
 ```
@@ -693,7 +686,7 @@ class: center, middle, inverse
 * ping .twitter[[@xavierlacot](https://twitter.com/xavierlacot)]
 ---
 
-# Performance de HateoasBundle :
+# Performance de BazingaHateoasBundle :
 * création d'un bundle permettant de mettre en cache le mécanisme de serialization
 * presque libre : https://github.com/ArteGEIE/ArteHateoasBundle
 * ping .twitter[[@xavierlacot](https://twitter.com/xavierlacot)]
