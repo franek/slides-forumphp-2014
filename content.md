@@ -164,7 +164,8 @@ class: center, middle, inverse
 ---
 # Objectifs
 
-* mise à disposition de tout le contenu ARTE :
+* volonté de mettre à disposition tout le contenu ARTE
+* adresser de manière unifiée tous les workflows
   * contenu antenne (broadcast, ARTE+7)
   * contenu spécifique Web (Concert, Future, Creative, Bonus web, ...)
 * ouverture (Open Data ?)
@@ -183,8 +184,8 @@ Pas seulement le contenu broadcast mais également les contenus développés pou
 * découplage en composants autonomes (microservices ?) :
   * authentification
   * Open Program API (OPA)
-  * API Player, client de OPA
-  * ...
+  * générateur de player ARTE (iframe/oEmbed)
+  * statistiques
 
 ---
 class: center, middle, inverse
@@ -404,24 +405,15 @@ Description des directives
   * header_filter_by_lua : permet d'ajouter des headers dans la réponse
 
 ---
-# Atteinte du quota
+# ça marche !!
 
-```lua
-local userRateLimit = 1000
-count = cache:get('throttle_' .. name)
-if tonumber(count) > userRateLimit then
-    ngx.header.content_type = 'application/json'
-    ngx.status = 429
-    ngx.say('
-      {
-        "message":
-        "API rate limit exceeded.
-        See documentation for details."
-      }
-    ')
-    ngx.exit(429)
-end
-```
+* 1500 requêtes/minute
+* temps de réponse : <50ms
+* utilisé sur http://www.24hjerusalem.tv/fr, TRACKS, iOS, Android, hbbtv, cinéma
+* 2 VM load balancés, mongo
+
+Prévision :
+ * 10x cette charge (pic 15000 requêtes)
 
 ---
 # Limites de la solution
@@ -445,9 +437,13 @@ end
 ---
 class: center, middle, inverse
 # Standard [{json:api}](http://www.jsonapi.org)
+
+???
+Ne pas réinventer un standard
+
 ---
 class: center, middle
-# **[{json:api}](http://www.jsonapi.org)**  est une convention pour décrire un appel REST au format JSON
+# **[{json:api}](http://www.jsonapi.org)**  est un standard pour construire une API
 
 ???
 L'objectif de JSON API est conçu pour limiter le nombre de requêtes et la taille des requêtes à réaliser entre le client et le serveur.
@@ -533,9 +529,9 @@ GET /users?limit=1&include=groups
     ]
   }
 }
-
 ```
----
+<!--
+-
 **[{json:api}](http://www.jsonapi.org)** décrit comment limiter les attributs retournés :
 ```bash
 GET /users?limit=1&fields=id
@@ -560,6 +556,7 @@ GET /users?limit=1&fields=id
 GET /users?limit=1&fields=id,name
 ```
 
+
 ```json
 {
 "users": [
@@ -575,6 +572,8 @@ GET /users?limit=1&fields=id,name
   ]
 }
 ```
+
+-->
 
 ---
 **[{json:api}](http://www.jsonapi.org)** propose une syntaxe évoluée pour les filtres :
