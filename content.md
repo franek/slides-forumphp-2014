@@ -264,9 +264,11 @@ Server: openresty
 ```
 
 ---
+class: center
+
 # Schéma d'architecture globale
 
-.center[<img src="./schemas/architecture-api.svg" alt="schéma d'artchitecture" height="680em" />]
+.center[<img src="./schemas/architecture-api2.png" alt="schéma d'artchitecture" height="505em"  />]
 
 ???
 Un Reverse Proxy qui protège toutes nos applications.
