@@ -268,7 +268,7 @@ class: center
 
 # Schéma d'architecture globale
 
-.center[<img src="./schemas/architecture-api2.png" alt="schéma d'artchitecture" height="505em"  />]
+.center[<img src="./schemas/architecture-api.png" alt="schéma d'architecture" height="500em"  />]
 
 ???
 Un Reverse Proxy qui protège toutes nos applications.
