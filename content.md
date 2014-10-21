@@ -14,6 +14,7 @@ Merci d'être venu si nombreux.
 
 ---
 # Ich heiße François Dume
+.twitter[[@`\_franek\_`](https://twitter.com/_franek_)]
 
 ???
 Je m'appelle François Dume.
@@ -116,7 +117,7 @@ Pour pouvoir développer ces magnifiques applications, nous avons besoin d'API.
 
 # Mise à disposition :
 
-* Des **métadonnées des programmes** diffusés à l'antenne (titre, description, photo, producteur, casting)
+* Des **métadonnées des programmes** diffusés à l'antenne (titre, description, photo, producteur, casting, horaires de diffusion)
 * Des **URLs des streams** (mp4, hls)
 <!--* De flux optimisés pour une plate-forme dédiée (applications mobiles, TV connectées, ...)-->
 * Des **statistiques de consultation** de nos contenus
@@ -161,13 +162,16 @@ class: center, middle, inverse
 
 # Développement d'une nouvelle API
 
+???
+Nous disposons déjà d'une API qui permet de mettre à disposition le contenu antenne.
+
 ---
 # Objectifs
 
 * volonté de mettre à disposition tout le contenu ARTE
 * adresser de manière unifiée tous les workflows
-  * contenu antenne (broadcast, ARTE+7)
-  * contenu spécifique Web (Concert, Future, Creative, Bonus web, ...)
+  * broadcast (ARTE+7)
+  * web (Concert, Future, Creative, ...)
 * ouverture (Open Data ?)
 * authentification oAuth
 * suivi de l'usage (throttling)
@@ -186,6 +190,21 @@ Pas seulement le contenu broadcast mais également les contenus développés pou
   * Open Program API (OPA)
   * générateur de player ARTE (iframe/oEmbed)
   * statistiques
+---
+class: layout-arte
+background-image: url(./images/capture-24hjerusalem.png)
+
+???
+Mis en production pour 24h Jerusalem en avril 2014.
+Début du développement décembre.
+
+---
+class: layout-arte
+background-image: url(./images/capture-tracks.png)
+
+---
+class: layout-arte
+background-image: url(./images/capture-cinema.png)
 
 ---
 class: center, middle, inverse
@@ -408,12 +427,11 @@ Description des directives
 # ça marche !!
 
 * 1500 requêtes/minute
-* temps de réponse : <50ms
-* utilisé sur http://www.24hjerusalem.tv/fr, TRACKS, iOS, Android, hbbtv, cinéma
-* 2 VM load balancés, mongo
+* temps de réponse : en moyenne <50ms
+* 2 VM load balancés
 
 Prévision :
- * 10x cette charge (pic 15000 requêtes)
+ * 10x cette charge
 
 ---
 # Limites de la solution
@@ -434,12 +452,17 @@ Prévision :
   * [libvmod-throttle](https://github.com/nand2/libvmod-throttle)
 * Autres solutions ? (Vos retours m'intéressent !)
 
+???
+Configuration mutualisée sur toute la plate-forme, difficilement modifiable
+
 ---
 class: center, middle, inverse
 # Standard [{json:api}](http://www.jsonapi.org)
 
 ???
-Ne pas réinventer un standard
+S'appuyer sur un standard pour construire toutes nos API.
+Il n'a rien de très révolutionnaire. Ce standard décrit certains mécanismes qui sont des standards de facto.
+Il détaille à la fois le format de la réponse JSON mais également la manière de requêter l'API.
 
 ---
 class: center, middle
@@ -530,8 +553,8 @@ GET /users?limit=1&include=groups
   }
 }
 ```
-<!--
--
+
+---
 **[{json:api}](http://www.jsonapi.org)** décrit comment limiter les attributs retournés :
 ```bash
 GET /users?limit=1&fields=id
@@ -573,9 +596,9 @@ GET /users?limit=1&fields=id,name
 }
 ```
 
--->
+<!--
 
----
+-
 **[{json:api}](http://www.jsonapi.org)** propose une syntaxe évoluée pour les filtres :
 
 ```bash
@@ -603,6 +626,8 @@ GET /users?id=gaston,fantasio
   ]
 }
 ```
+
+-->
 
 ---
 # Création de requête complexe avec **[{json:api}](http://www.jsonapi.org)**
@@ -699,6 +724,7 @@ class: center, middle, inverse
   * Work In Progress : Module Drupal
 * ouvrir le code du serveur de l'API (cf. [The Guardian](https://github.com/guardian))
 * ouvrir l'API à des développeurs externes (Open Data ?)
+* intégration d'une stratégie d'invalidation du cache varnish ([FOSHttpCache](https://github.com/FriendsOfSymfony/FOSHttpCache]))
 * HHVM ?
 <!--* développement d'une app [Arte Firefox OS](https://www.mozilla.org/fr/firefox/os/) ? -->
 
