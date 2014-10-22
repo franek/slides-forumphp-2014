@@ -191,20 +191,15 @@ Pas seulement le contenu broadcast mais également les contenus développés pou
   * générateur de player ARTE (iframe/oEmbed)
   * statistiques
 ---
-class: layout-arte
-background-image: url(./images/capture-24hjerusalem.png)
+class: center, middle, inverse
+
+![ça marche](ca-marche.gif)
 
 ???
+
 Mis en production pour 24h Jerusalem en avril 2014.
-Début du développement décembre.
+Début du développement décembre. Utilisé par Tracks.
 
----
-class: layout-arte
-background-image: url(./images/capture-tracks.png)
-
----
-class: layout-arte
-background-image: url(./images/capture-cinema.png)
 
 ---
 class: center, middle, inverse
