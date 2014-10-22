@@ -334,7 +334,7 @@ Server: openresty
 }
 ```
 ---
-(4) Ces informations seront stockées par nginx dans une base de données clé-valeur, l'attribut "remaining" est décrémenté.
+(4) Ces informations seront stockées par nginx dans une base de données clé-valeur, le compteur de requêtes est décrémenté.
 
 
 ```lua
@@ -345,7 +345,7 @@ local succ, err, forcible = cache:set(
 cache:incr('throttle_' .. key, 1)
 ```
 
-.small[N.B : À la requête suivante, le Reverse Proxy n'interrogera plus le serveur oAuth, il lira son cache et décrémentera "remaining".]
+.small[N.B : À la requête suivante, le Reverse Proxy n'interrogera plus le serveur oAuth, il lira son cache et décrémentera le compteur de requêtes (remaining).]
 
 ---
 
@@ -419,14 +419,15 @@ Description des directives
   * header_filter_by_lua : permet d'ajouter des headers dans la réponse
 
 ---
+
 # It works !
 
 * 1500 requêtes/minute
-* temps de réponse : en moyenne <50ms
+* temps de réponse moyen : <50ms
 * 2 VM load balancés
 
 Prévision :
- * 10x cette charge
+ * au moins 10x cette charge
 
 ---
 # Limites de la solution
@@ -461,7 +462,7 @@ Il détaille à la fois le format de la réponse JSON mais également la manièr
 
 ---
 class: center, middle
-# **[{json:api}](http://www.jsonapi.org)**  est un standard pour construire une API
+# **[{json:api}](http://www.jsonapi.org)** est un standard pour construire une API
 
 ???
 L'objectif de JSON API est conçu pour limiter le nombre de requêtes et la taille des requêtes à réaliser entre le client et le serveur.
@@ -698,7 +699,8 @@ public function shouldSkipProperty(PropertyMetadata $property, Context $navigato
 class: center, middle, inverse
 # Problèmes rencontrés
 # dans le cadre du développement
-# des nouvelles API (Symfony2)
+# des nouvelles API 
+# (Symfony2)
 ---
 # Performance du JMSSerializer :
 
