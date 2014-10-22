@@ -193,7 +193,7 @@ Pas seulement le contenu broadcast mais également les contenus développés pou
 ---
 class: center, middle, inverse
 
-![ça marche](ca-marche.gif)
+![ça marche](./images/ca-marche.gif)
 
 ???
 
