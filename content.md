@@ -419,7 +419,7 @@ Description des directives
   * header_filter_by_lua : permet d'ajouter des headers dans la réponse
 
 ---
-# ça marche !!
+# It works !
 
 * 1500 requêtes/minute
 * temps de réponse : en moyenne <50ms
